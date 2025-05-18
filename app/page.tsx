@@ -29,14 +29,16 @@ export default function Home() {
   // Function to handle audit completion
   const handleAuditComplete = () => {
     setHasCompletedAuditBefore(true)
-    // Close the audit and redirect to results page
-    setShowAudit(false)
-    router.push("/my-results")
+    // Don't close the audit - let the user see their results
   }
 
   // Function to view previous results
   const viewPreviousResults = () => {
     router.push("/my-results")
+  }
+
+  const goToWebsite = () => {
+    window.open("https://www.maketimeformore.com", "_blank")
   }
 
   return (
@@ -53,16 +55,16 @@ export default function Home() {
           />
         </div>
         <h1 className="text-4xl font-bold tracking-tight mb-4 text-[#E26C73]">Make Time For More™</h1>
-        <h2 className="text-2xl font-medium mb-6 text-gray-700">Work-Life Balance Audit</h2>
+        <h2 className="text-2xl font-medium mb-6 text-gray-700">Work-Lifestyle Balance Audit</h2>
         <p className="text-lg text-gray-600 mb-4">
-          This is your personal 15-question Work-Life Balance Audit based on the 13 Core Life Value Areas we focus on
-          inside the Make Time For More™ Work-Life Balance Experience.
+          This is your personal 15-question Work-Lifestyle Balance Audit based on the 13 Core Life Value Areas we focus
+          on inside the Make Time For More™ Work-Lifestyle Balance Experience.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Button
             size="lg"
             onClick={() => setShowAudit(true)}
-            className="bg-[#E26C73] hover:bg-[#d15964] text-white font-medium px-8 py-6 rounded-md shadow-md"
+            className="bg-[#5D9D61] hover:bg-[#4c8050] text-white font-medium px-8 py-6 rounded-md shadow-md"
           >
             <RefreshCw className="mr-2 h-5 w-5" />
             Take The Audit
@@ -72,13 +74,14 @@ export default function Home() {
             <Button
               size="lg"
               onClick={viewPreviousResults}
-              className="bg-[#5D9D61] hover:bg-[#4c8050] text-white font-medium px-8 py-6 rounded-md shadow-md"
+              className="bg-[#E26C73] hover:bg-[#d15964] text-white font-medium px-8 py-6 rounded-md shadow-md"
             >
               <FileText className="mr-2 h-5 w-5" />
               Back to Your Results
             </Button>
           )}
         </div>
+
         <p className="mt-4 text-sm text-gray-500">This is not about judgment — this is about clarity.</p>
       </div>
 
