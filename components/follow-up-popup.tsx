@@ -54,8 +54,8 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
         <DialogHeader>
           <div className="flex justify-center mb-4 relative">
             <Image
-              src="https://make-time-for-more.vercel.app/images/cherry-blossom-tea.png"
-              alt="Women enjoying tea under cherry blossoms"
+              src="https://make-time-for-more.vercel.app/images/logo.png"
+              alt="Make Time For More Logo"
               width={300}
               height={200}
               className="rounded-lg shadow-md"
