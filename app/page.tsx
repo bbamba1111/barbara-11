@@ -16,13 +16,23 @@ export default function Home() {
   const router = useRouter()
 
   // Check localStorage on component mount to see if user has completed the audit
+  // and if this is their first visit
   useEffect(() => {
     const auditCompleted = hasCompletedAudit()
     setHasCompletedAuditBefore(auditCompleted)
 
-    // Only show follow-up popup for returning visitors who completed the audit
-    if (auditCompleted && document.referrer !== "") {
-      setShowFollowUp(true)
+    // Check if this is the user's first visit
+    const hasVisitedBefore = localStorage.getItem("hasVisitedBefore")
+    
+    if (!hasVisitedBefore) {
+      // This is their first visit - show the audit popup automatically
+      localStorage.setItem("hasVisitedBefore", "true")
+      setShowAudit(true)
+    } else {
+      // Only show follow-up popup for returning visitors who completed the audit
+      if (auditCompleted && document.referrer !== "") {
+        setShowFollowUp(true)
+      }
     }
   }, [])
 
@@ -67,7 +77,7 @@ export default function Home() {
             className="bg-[#5D9D61] hover:bg-[#4c8050] text-white font-medium px-8 py-6 rounded-md shadow-md"
           >
             <RefreshCw className="mr-2 h-5 w-5" />
-            Take The Audit
+            Take The FREE Audit!
           </Button>
 
           {hasCompletedAuditBefore && (
