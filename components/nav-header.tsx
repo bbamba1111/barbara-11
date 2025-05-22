@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
 import { hasCompletedAudit } from "@/utils/audit-storage"
-import { Menu, RefreshCw, FileText, Calendar, X, ExternalLink } from 'lucide-react'
+import { Menu, RefreshCw, FileText, X, ExternalLink } from 'lucide-react'
 
 export default function NavHeader() {
   const router = useRouter()
@@ -63,24 +63,6 @@ export default function NavHeader() {
             </Button>
           )}
 
-          <Button
-            variant="ghost"
-            onClick={() => navigateTo("/learn-more")}
-            className={pathname === "/learn-more" ? "bg-gray-100" : ""}
-          >
-            <FileText className="h-4 w-4 mr-2" />
-            Learn More
-          </Button>
-
-          <Button
-            variant="ghost"
-            onClick={() => navigateTo("/join-us")}
-            className={pathname === "/join-us" ? "bg-gray-100" : ""}
-          >
-            <Calendar className="h-4 w-4 mr-2" />
-            Join Us
-          </Button>
-
           <Button variant="ghost" onClick={openApplyNow} className="bg-[#5D9D61] text-white hover:bg-[#4c8050]">
             <ExternalLink className="h-4 w-4 mr-2" />
             APPLY NOW!
@@ -116,24 +98,6 @@ export default function NavHeader() {
                 Back to Your Results
               </Button>
             )}
-
-            <Button
-              variant="ghost"
-              onClick={() => navigateTo("/learn-more")}
-              className={`justify-start ${pathname === "/learn-more" ? "bg-gray-100" : ""} mb-2`}
-            >
-              <FileText className="h-4 w-4 mr-2" />
-              Learn More
-            </Button>
-
-            <Button
-              variant="ghost"
-              onClick={() => navigateTo("/join-us")}
-              className={`justify-start ${pathname === "/join-us" ? "bg-gray-100" : ""} mb-2`}
-            >
-              <Calendar className="h-4 w-4 mr-2" />
-              Join Us
-            </Button>
 
             <Button
               variant="ghost"

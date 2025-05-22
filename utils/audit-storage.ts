@@ -1,62 +1,71 @@
-import type { Result, Category } from "@/components/work-life-balance-audit"
+import type { Result } from "@/components/work-life-balance-audit"
 
-// Define the structure of stored audit data
-export interface StoredAuditData {
-  completed: boolean
-  timestamp: number
-  name: string
-  email: string
-  overallScore: number
-  results: Result[]
-  personalizedFeedback: { category: Category; feedback: string }[]
+// Define the type for personalized feedback
+interface PersonalizedFeedback {
+  category: string
+  feedback: string
 }
 
-// Save audit results to localStorage
-export function saveAuditResults(
+// Function to check if the user has completed the audit
+export const hasCompletedAudit = (): boolean => {
+  try {
+    const savedResults = localStorage.getItem("workLifeBalanceAuditResults")
+    return savedResults !== null
+  } catch (error) {
+    console.error("Error checking audit completion:", error)
+    return false
+  }
+}
+
+// Function to save audit results to localStorage
+export const saveAuditResults = (
   name: string,
   email: string,
   overallScore: number,
   results: Result[],
-  personalizedFeedback: { category: Category; feedback: string }[],
-): void {
-  const auditData: StoredAuditData = {
-    completed: true,
-    timestamp: Date.now(),
-    name,
-    email,
-    overallScore,
-    results,
-    personalizedFeedback,
-  }
-
+  feedback: PersonalizedFeedback[],
+) => {
   try {
-    localStorage.setItem("auditCompleted", "true")
-    localStorage.setItem("auditData", JSON.stringify(auditData))
+    // Create a results object to store
+    const auditResults = {
+      name,
+      email,
+      overallScore,
+      results,
+      feedback,
+      timestamp: new Date().toISOString(),
+    }
+
+    // Save to localStorage
+    localStorage.setItem("workLifeBalanceAuditResults", JSON.stringify(auditResults))
+    return true
   } catch (error) {
-    console.error("Error saving audit data to localStorage:", error)
+    console.error("Error saving audit results:", error)
+    return false
   }
 }
 
-// Get audit results from localStorage
-export function getAuditResults(): StoredAuditData | null {
+// Function to get saved audit results from localStorage
+export const getSavedAuditResults = () => {
   try {
-    const auditDataString = localStorage.getItem("auditData")
-    if (!auditDataString) return null
-
-    return JSON.parse(auditDataString) as StoredAuditData
+    const savedResults = localStorage.getItem("workLifeBalanceAuditResults")
+    if (savedResults) {
+      return JSON.parse(savedResults)
+    }
+    return null
   } catch (error) {
-    console.error("Error retrieving audit data from localStorage:", error)
+    console.error("Error retrieving audit results:", error)
     return null
   }
 }
 
-// Check if user has completed the audit
-export function hasCompletedAudit(): boolean {
-  return localStorage.getItem("auditCompleted") === "true"
-}
-
-// Clear audit data (for testing)
-export function clearAuditData(): void {
-  localStorage.removeItem("auditCompleted")
-  localStorage.removeItem("auditData")
+// Function to clear saved audit results from localStorage
+export const clearSavedAuditResults = () => {
+  try {
+    localStorage.removeItem("workLifeBalanceAuditResults")
+    return true
+  } catch (error) {
+    console.error("Error clearing audit results:", error)
+    return false
+  }
 }
