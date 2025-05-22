@@ -1,171 +1,200 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image"
-import { ExternalLink, Clock, ArrowLeft, FileText, Globe } from 'lucide-react'
-import { useRouter } from "next/navigation"
-import CountdownTimer from "@/components/countdown-timer"
-import RepeatedConfetti from "@/components/repeated-confetti"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { ArrowLeft, Gift, Sparkles } from 'lucide-react'
 
 export default function JoinUsPage() {
-  const router = useRouter()
-  const [showConfetti, setShowConfetti] = useState(true)
-
-  useEffect(() => {
-    // Hide confetti after 10 seconds (enough for all bursts)
-    const timer = setTimeout(() => {
-      setShowConfetti(false)
-    }, 10000)
-
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [])
-
-  const goToWebsite = () => {
-    window.open("https://www.maketimeformore.com", "_blank")
-  }
-
-  const goToLearnMore = () => {
-    // Navigate to the learn-more page and ensure it scrolls to the top
-    router.push("/learn-more")
-    // Force scroll to top after navigation
-    window.scrollTo(0, 0)
-  }
-
   return (
-    <main className="flex min-h-screen flex-col items-center p-4 md:p-8 bg-gradient-to-b from-white to-rose-50">
-      <div className="max-w-3xl w-full space-y-6 mb-16 relative">
-        {showConfetti && <RepeatedConfetti burstCount={3} burstDuration={3} interval={3000} />}
+    <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gradient-to-b from-white to-rose-50">
+      <div className="max-w-3xl w-full">
+        <Link href="/" className="inline-flex items-center text-[#E26C73] hover:text-[#d15964] mb-6">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Home
+        </Link>
 
-        <div className="flex flex-col sm:flex-row gap-2 mb-4">
-          <Button variant="outline" onClick={() => router.push("/")} className="flex-1">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Home
-          </Button>
-
-          <Button variant="outline" onClick={() => router.push("/my-results")} className="flex-1">
-            <FileText className="mr-2 h-4 w-4" />
-            Back to Results
-          </Button>
-
-          <Button variant="outline" onClick={goToWebsite} className="flex-1 bg-[#5D9D61] text-white hover:bg-[#4c8050]">
-            <Globe className="mr-2 h-4 w-4" />
-            Visit Website
-          </Button>
-        </div>
-
-        <div className="text-center">
-          <div className="w-24 h-24 mx-auto mb-4 relative">
-            <Image
-              src="/images/logo.png"
-              alt="Make Time For More Logo"
-              width={120}
-              height={120}
-              className="rounded-full shadow-lg"
-            />
-          </div>
-          <h1 className="text-2xl font-bold text-[#E26C73] mb-2">Join Us For Our Next Sunday Kick-Off Celebration!</h1>
-          <p className="text-gray-600 mb-2">Immerse yourself in the top 5% sacred secret to work-lifestyle success</p>
-        </div>
-
-        <div className="flex justify-center mb-4 relative">
+        <div className="mb-6 flex justify-center">
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1akick-P2UP8ICvs4G1iTkVYmy5CEDFsMtTIB.png"
-            alt="Women enjoying tea under cherry blossoms"
-            width={500}
-            height={300}
-            className="rounded-lg shadow-md"
+            src="/images/logo.png"
+            alt="Make Time For More Logo"
+            width={120}
+            height={120}
+            className="rounded-full shadow-lg"
           />
         </div>
 
-        {/* Countdown Timer - Pink and Green Gradient */}
-        <div className="mb-4">
-          <div className="bg-gradient-to-r from-[#E26C73] to-[#5D9D61] p-4 rounded-lg text-white shadow-md">
-            <CountdownTimer className="text-white" />
-          </div>
-          
-          {/* Timing information moved here and styled as requested */}
-          <div className="text-center mt-3">
-            <p className="text-black font-bold text-lg">
-              Sunday Kick-Off Begins: 1:00 PM EST | Monday Co-Working Begins: 9:00 AM EST
+        <h1 className="text-3xl font-bold tracking-tight mb-6 text-[#E26C73] text-center">
+          Join the Make Time For More™ Community
+        </h1>
+
+        <div className="space-y-6 text-gray-700">
+          <div className="bg-white p-6 rounded-lg shadow-md border border-[#E26C73] mb-8">
+            <div className="flex items-center justify-center gap-2 mb-4 text-[#E26C73]">
+              <Gift className="h-5 w-5" />
+              <h2 className="text-xl font-bold">Start With Your FREE Work-Life Balance Audit</h2>
+              <Gift className="h-5 w-5" />
+            </div>
+            <p className="text-center mb-2">
+              <span className="font-bold">Regular Value: $997</span> — Yours FREE Today
             </p>
-          </div>
-        </div>
-
-        <div className="space-y-6 py-4">
-          <Card className="border-[#E26C73] bg-rose-50">
-            <CardContent className="space-y-4 pt-6">
-              <h3 className="font-medium text-[#E26C73] text-xl mb-2">Important Enrollment Deadline</h3>
-              <p className="mb-2 text-lg">
-                You must complete the enrollment process by <span className="font-bold">Thursday 7:00 PM EST</span> to
-                attend the Sunday Kick-Off Celebration and begin co-working on Monday.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-[#E26C73] bg-[#f5f0e6]">
-            <CardContent className="space-y-4 pt-6">
-              <h3 className="font-medium text-amber-700 text-xl mb-2">Special BETA Opportunity</h3>
-              <p className="mb-3 text-lg">
-                You're invited to discover The Sacred Secret to Success through our exclusive BETA program at special
-                investment pricing!
-              </p>
-              <p className="mb-3">
-                As a BETA participant, you'll receive the full premium experience at a reduced investment in exchange
-                for:
-              </p>
-              <ul className="list-disc pl-5 space-y-1 mb-3">
-                <li>Your valuable feedback on the experience</li>
-                <li>A testimonial sharing your transformation</li>
-                <li>Your insights to help shape and refine the program</li>
-              </ul>
-              <p className="text-md font-medium text-amber-700">
-                This special BETA pricing is available for a limited time only. Once our BETA period concludes, the
-                investment will increase to reflect the premium value of this boutique experience.
-              </p>
-            </CardContent>
-          </Card>
-
-          <div className="flex flex-col space-y-3">
-            <Button
-              onClick={() =>
-                window.open(
-                  "https://docs.google.com/forms/d/e/1FAIpQLSeYa2yNmiIOXykp3Kd5Xts0jDPe96NJ4adWhFYEwi5GXZ3Ilw/viewform?usp=header",
-                  "_blank",
-                )
-              }
-              className="w-full bg-[#5D9D61] hover:bg-[#4c8050] text-white text-lg py-3 relative font-bold"
-            >
-              <ExternalLink className="mr-2 h-5 w-5" />
-              APPLY NOW!
-            </Button>
-
-            <Button
-              onClick={goToLearnMore}
-              className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white py-3"
-            >
-              <ExternalLink className="mr-2 h-4 w-4" />
-              Learn More
-            </Button>
-
-            <Button onClick={goToWebsite} className="w-full bg-[#5D9D61] hover:bg-[#4c8050] text-white py-3">
-              <Globe className="mr-2 h-4 w-4" />
-              Visit Our Website
-            </Button>
-
-            <Button variant="outline" onClick={() => router.push("/")} className="mt-4">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
-            </Button>
+            <p className="text-center italic mb-4">
+              "The Mandatory 1st Step to Achieving Your Desired Work-Lifestyle"
+            </p>
+            <div className="flex justify-center">
+              <Link href="/">
+                <Button className="bg-[#5D9D61] hover:bg-[#4c8050] text-white font-bold text-xl">
+                  Take The FREE Audit Now!
+                </Button>
+              </Link>
+            </div>
           </div>
 
-          <p className="text-sm text-center text-gray-600 mt-4">
-            "You didn't leave your high-stress role just to rebuild burnout inside your business."
-            <br />- Thought Leader Barbara
+          <p className="text-center text-lg">
+            Ready to transform your work-life balance and join a community of like-minded women founders?
           </p>
+
+          <div className="bg-white p-6 rounded-lg shadow-md my-8 border border-[#E26C73]">
+            <h2 className="text-xl font-semibold text-[#E26C73] mb-4 text-center">
+              The Make Time For More™ Work-Life Balance Experience
+            </h2>
+            <p className="mb-6">
+              Join our signature program designed specifically for women founders and entrepreneurs who want to:
+            </p>
+            <ul className="list-disc pl-5 space-y-3 mb-6">
+              <li>Create a sustainable work-life balance without sacrificing business growth</li>
+              <li>Develop systems that support both personal wellbeing and professional success</li>
+              <li>Connect with a community of like-minded women entrepreneurs</li>
+              <li>Receive personalized guidance and accountability</li>
+              <li>Transform your relationship with time, energy, and priorities</li>
+            </ul>
+            <div className="flex justify-center">
+              <a href="https://www.maketimeformore.com/join" target="_blank" rel="noopener noreferrer">
+                <Button className="bg-[#E26C73] hover:bg-[#d15964] text-white font-medium px-8 py-6 rounded-md shadow-md">
+                  Learn More About the Program
+                </Button>
+              </a>
+            </div>
+          </div>
+
+          <h2 className="text-xl font-semibold text-[#E26C73] mt-8 text-center">Free Resources</h2>
+
+          <div className="grid md:grid-cols-2 gap-6 mt-6">
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+              <h3 className="text-lg font-semibold text-[#E26C73] mb-3">Weekly Newsletter</h3>
+              <p className="mb-4">
+                Get practical work-life balance tips, inspiration, and resources delivered directly to your inbox.
+              </p>
+              <a href="https://www.maketimeformore.com/newsletter" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  className="w-full border-[#E26C73] text-[#E26C73] hover:bg-[#E26C73] hover:text-white"
+                >
+                  Subscribe Now
+                </Button>
+              </a>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+              <h3 className="text-lg font-semibold text-[#E26C73] mb-3">Free Workshop</h3>
+              <p className="mb-4">Join our free masterclass: "3 Keys to Work-Life Balance for Women Founders"</p>
+              <a href="https://www.maketimeformore.com/workshop" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  className="w-full border-[#E26C73] text-[#E26C73] hover:bg-[#E26C73] hover:text-white"
+                >
+                  Register for Free
+                </Button>
+              </a>
+            </div>
+          </div>
+
+          <h2 className="text-xl font-semibold text-[#E26C73] mt-8 text-center">Connect With Us</h2>
+
+          <div className="flex justify-center space-x-6 mt-4">
+            <a
+              href="https://www.instagram.com/maketimeformore"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-[#E26C73]"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-instagram"
+              >
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+              </svg>
+            </a>
+            <a
+              href="https://www.facebook.com/maketimeformore"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-[#E26C73]"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-facebook"
+              >
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+            </a>
+            <a
+              href="https://www.linkedin.com/company/maketimeformore"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-[#E26C73]"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-linkedin"
+              >
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect width="4" height="12" x="2" y="9" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </a>
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-md mt-8 border border-[#E26C73]">
+            <h2 className="text-xl font-semibold text-[#E26C73] mb-4 text-center">Have Questions?</h2>
+            <p className="mb-4 text-center">
+              We're here to help! Reach out to our team for more information about our programs and resources.
+            </p>
+            <div className="flex justify-center">
+              <a href="mailto:hello@maketimeformore.com">
+                <Button
+                  variant="outline"
+                  className="border-[#E26C73] text-[#E26C73] hover:bg-[#E26C73] hover:text-white"
+                >
+                  Contact Us
+                </Button>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </main>
