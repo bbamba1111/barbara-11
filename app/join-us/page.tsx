@@ -61,7 +61,7 @@ export default function JoinUsPage() {
           <Link href="/apply">
             <Button className="bg-[#5D9D61] hover:bg-[#4c8050]" size="sm">APPLY NOW!</Button>
           </Link>
-          <Link href="https://yourdomain.com" target="_blank">
+          <Link href="https://www.maketimeformore.com" target="_blank">
             <Button variant="outline" size="sm">Visit Our Website</Button>
           </Link>
         </div>
@@ -89,7 +89,7 @@ export default function JoinUsPage() {
           {/* Countdown Timer - FIXED TEXT HERE */}
           <div className="bg-gradient-to-r from-[#E26C73] to-[#5D9D61] text-white rounded-lg p-6 mb-8">
             <h2 className="text-xl font-medium mb-4">
-              Counting Down to Our 28 Day Work-Life Balance Cycle In June
+              Counting Down to Our 28-Day Work-Life Balance Cycle In June!
             </h2>
             
             <div className="flex justify-center space-x-4 mb-4">
@@ -127,7 +127,7 @@ export default function JoinUsPage() {
               Important Enrollment Deadline
             </h3>
             <p className="text-gray-700">
-              You must complete the enrollment process by Thursday, 7:00 PM EST to attend the
+              You must complete the enrollment process by Thursday, 10:00 PM EST to attend the
               Sunday Kick-Off and start with the group.
             </p>
           </div>
