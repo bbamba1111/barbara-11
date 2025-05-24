@@ -84,15 +84,18 @@ export default function BetaInvitation({
         </CardContent>
       </Card>
 
-      <div className="space-y-4 mt-6">
-        <Button onClick={goToJoinUs} className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white">
+      <div className="space-y-2 mt-6 max-w-lg mx-auto">
+        <Button
+          onClick={goToJoinUs}
+          className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white py-4 border-2 border-white"
+        >
           <ExternalLink className="mr-2 h-4 w-4" />
           Join Us
         </Button>
 
         <Button
           onClick={() => router.push("/learn-more")}
-          className="w-full bg-[#5D9D61] hover:bg-[#4c8050] text-white"
+          className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white py-4 border-2 border-white"
         >
           <ExternalLink className="mr-2 h-4 w-4" />
           Learn More
@@ -105,7 +108,7 @@ export default function BetaInvitation({
               "_blank",
             )
           }
-          className="w-full bg-[#5D9D61] hover:bg-[#4c8050] text-white font-bold"
+          className="w-full bg-[#5D9D61] hover:bg-[#4c8050] text-white font-bold py-4 border-2 border-white"
         >
           <ExternalLink className="mr-2 h-4 w-4" />
           APPLY NOW!
@@ -113,7 +116,7 @@ export default function BetaInvitation({
 
         <ButtonLink
           href="https://chatgpt.com/g/g-67f5422677308191aa28a86d8ae5084e-free-work-life-balance-audit-for-women-founders"
-          className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white flex items-center justify-center"
+          className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white flex items-center justify-center py-4 border-2 border-white"
         >
           <ExternalLink className="mr-2 h-4 w-4" />
           Chat with Cherry Blossom
@@ -121,7 +124,11 @@ export default function BetaInvitation({
         </ButtonLink>
       </div>
 
-      <Button variant="outline" onClick={onBack} className="w-full">
+      <Button
+        variant="outline"
+        onClick={onBack}
+        className="w-full max-w-lg mx-auto bg-[#E26C73] hover:bg-[#d15964] text-white py-4 border-2 border-white mt-4"
+      >
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to Your Results
       </Button>
