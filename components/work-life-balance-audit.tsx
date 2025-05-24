@@ -6,15 +6,12 @@ import { Button } from "@/components/ui/button"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
-import { Input } from "@/components/ui/input"
 import {
   Heart,
   Home,
   Briefcase,
   ArrowRight,
   ArrowLeft,
-  RefreshCw,
-  Check,
   Sparkles,
   Brain,
   Leaf,
@@ -25,18 +22,12 @@ import {
   Palette,
   HeartHandshake,
   Moon,
-  User,
-  Copy,
-  ExternalLink,
-  Info,
-  Flower,
   X,
 } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
-import { ButtonLink } from "./ui/button-link"
 import CherryBlossomConfetti from "./cherry-blossom-confetti"
 import type { ReactNode } from "react"
+import { useRouter } from "next/navigation"
 
 interface WorkLifeBalanceAuditProps {
   onClose: () => void
@@ -363,6 +354,7 @@ export default function WorkLifeBalanceAudit({ onClose, onComplete }: WorkLifeBa
   const [personalizedFeedback, setPersonalizedFeedback] = useState<{ category: Category; feedback: string }[]>([])
   const [showConfetti, setShowConfetti] = useState(false)
   const cherryBlossomPromptRef = useRef<HTMLTextAreaElement>(null)
+  const router = useRouter()
 
   const totalSteps = questions.length
   const progress = (currentStep / totalSteps) * 100
@@ -424,6 +416,9 @@ export default function WorkLifeBalanceAudit({ onClose, onComplete }: WorkLifeBa
     setCurrentStep(0)
     setAnswers({})
     setResults([])
+    // Clear the "don't show again" setting and redirect to home
+    localStorage.removeItem("dontShowAuditWelcome")
+    router.push("/")
   }
 
   const calculateResults = () => {
@@ -484,86 +479,18 @@ export default function WorkLifeBalanceAudit({ onClose, onComplete }: WorkLifeBa
 
     // Save results to localStorage
     saveAuditResults(name, email, overallPercentage, calculatedResults, feedback)
-  }
 
-  const getScoreColor = (percentage: number) => {
-    if (percentage < 40) return "text-red-500"
-    if (percentage < 70) return "text-amber-500"
-    return "text-emerald-500"
-  }
-
-  const getScoreDescription = (percentage: number) => {
-    if (percentage < 40) return "Needs significant improvement"
-    if (percentage < 70) return "Room for improvement"
-    if (percentage < 90) return "Good balance"
-    return "Excellent balance"
-  }
-
-  // Function to copy Cherry Blossom prompt to clipboard
-  const copyCherryBlossomPrompt = async () => {
-    if (cherryBlossomPromptRef.current) {
-      try {
-        await navigator.clipboard.writeText(cherryBlossomPromptRef.current.value)
-        setIsCherryPromptCopied(true)
-        setTimeout(() => setIsCherryPromptCopied(false), 2000)
-      } catch (error) {
-        console.error("Error copying Cherry Blossom prompt:", error)
-      }
-    }
-  }
-
-  // Generate Cherry Blossom prompt
-  const generateCherryBlossomPrompt = () => {
-    let prompt = `Hello Cherry Blossom! I just completed the Work-Life Balance Audit. Here are my results:
-
-`
-    prompt += `Name: ${name}
-`
-    prompt += `Overall Score: ${overallScore}%
-
-`
-
-    if (isExcellentScore) {
-      prompt += `I'm doing well with my work-life balance, scoring ${overallScore}% overall!
-
-`
-      prompt += `My category scores (from lowest to highest):
-`
-      results.forEach((result) => {
-        prompt += `- ${categoryLabels[result.category]}: ${Math.round(result.percentage)}%
-`
-      })
-
-      prompt += `
-I'd like your guidance on maintaining my excellent work-life balance. What specific strategies would you recommend to help me continue this success?`
-    } else {
-      prompt += `My category scores (from lowest to highest):
-`
-      results.forEach((result) => {
-        prompt += `- ${categoryLabels[result.category]}: ${Math.round(result.percentage)}%
-`
-      })
-
-      prompt += `
-My lowest scoring areas are:
-`
-      personalizedFeedback.forEach((item) => {
-        prompt += `- ${categoryLabels[item.category]}
-`
-      })
-
-      prompt += `
-I'd like your guidance on improving these areas. What specific strategies would you recommend for my situation?`
-    }
-
-    return prompt
+    // Navigate to results page after completing audit
+    setTimeout(() => {
+      router.push("/my-results")
+    }, 1000)
   }
 
   const currentQuestion = questions[currentStep]
 
   return (
-    <div className="fixed inset-0 z-50 overflow-auto bg-black/50 flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-[600px] max-h-[90vh] overflow-y-auto relative m-4 w-full">
+    <div className="fixed inset-0 z-50 overflow-auto bg-black/50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-[550px] w-full min-h-[85vh] max-h-[90vh] overflow-y-auto relative">
         {/* Close button */}
         <button
           onClick={onClose}
@@ -579,17 +506,21 @@ I'd like your guidance on improving these areas. What specific strategies would 
         <div className="p-6">
           {!isResultsPage && (
             <div className="mb-6">
+              {/* 1 inch whitespace + 25% more = 120px */}
+              <div className="h-40"></div>
+
               <div className="flex justify-center mb-4">
                 <Image
                   src="/images/logo.png"
                   alt="Make Time For More Logo"
-                  width={120}
-                  height={120}
+                  width={75}
+                  height={75}
                   className="rounded-full"
                 />
               </div>
-              <h2 className="text-xl font-semibold text-center">Work-Life Balance Audit</h2>
-              <p className="text-gray-500 text-center">
+              <h2 className="text-xl brand-title text-center text-brand-pink mb-1">Make Time For More™</h2>
+              <h3 className="text-lg brand-subtitle text-center text-black mb-6">Work-Life Balance Audit</h3>
+              <p className="text-gray-600 text-center text-sm">
                 Based on the 13 Core Life Value Areas from the Make Time For More™ Work-Life Balance Experience
               </p>
             </div>
@@ -597,22 +528,27 @@ I'd like your guidance on improving these areas. What specific strategies would 
 
           {isResultsPage && (
             <div className="mb-6">
+              {/* 1 inch whitespace + 25% more = 120px */}
+              <div className="h-40"></div>
+
               <div className="flex justify-center mb-4">
                 <Image
                   src="/images/logo.png"
                   alt="Make Time For More Logo"
-                  width={120}
-                  height={120}
+                  width={75}
+                  height={75}
                   className="rounded-full"
                 />
               </div>
-              <h2 className="text-xl font-semibold text-center">Your Work-Life Balance Results Are In</h2>
+              <h2 className="text-xl brand-title text-center text-brand-pink mb-1">Make Time For More™</h2>
+              <h3 className="text-lg text-center text-black mb-4">Your Work-Life Balance Results Are In</h3>
+              <p className="text-center text-gray-600 text-sm">Redirecting to your results page...</p>
             </div>
           )}
 
           {!isResultsPage && (
             <div className="mb-4">
-              <div className="flex justify-between text-sm mb-1">
+              <div className="flex justify-between text-sm mb-2">
                 <span>
                   Question {currentStep + 1} of {totalSteps}
                 </span>
@@ -625,26 +561,26 @@ I'd like your guidance on improving these areas. What specific strategies would 
           {!isResultsPage && (
             <div className="py-4">
               <div className="mb-4">
-                <p className="text-sm text-gray-500 mb-2">
+                <p className="text-sm text-gray-500 mb-3">
                   On a scale from 1 to 5, where 1 = Never and 5 = Consistently:
                 </p>
               </div>
-              <h3 className="text-lg font-medium mb-2">
-                <span className="inline-block bg-[#E26C73] text-white rounded-full w-6 h-6 text-center mr-2">
+              <h3 className="text-lg header-bold mb-3">
+                <span className="inline-block bg-brand-pink text-white rounded-full w-7 h-7 text-center leading-7 mr-2 text-sm">
                   {currentQuestion.number}
                 </span>
                 {currentQuestion.title}
               </h3>
-              <p className="mb-6 text-gray-700">{currentQuestion.text}</p>
+              <p className="mb-6 text-black leading-relaxed">{currentQuestion.text}</p>
               <RadioGroup
                 value={answers[currentQuestion.id]?.toString() || ""}
                 onValueChange={handleAnswer}
                 className="space-y-3"
               >
                 {answerLabels.map((label, index) => (
-                  <div key={index} className="flex items-center space-x-2 border p-3 rounded-md">
+                  <div key={index} className="flex items-center space-x-3 border p-3 rounded-md hover:bg-gray-50">
                     <RadioGroupItem value={(index + 1).toString()} id={`answer-${index}`} />
-                    <Label htmlFor={`answer-${index}`} className="flex-1 cursor-pointer">
+                    <Label htmlFor={`answer-${index}`} className="flex-1 cursor-pointer text-sm">
                       {label}
                     </Label>
                   </div>
@@ -653,256 +589,10 @@ I'd like your guidance on improving these areas. What specific strategies would 
             </div>
           )}
 
-          {isResultsPage && (
-            <div className="space-y-6">
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold">Overall Score: {overallScore}%</h3>
-                <p className={`${getScoreColor(overallScore)} font-medium`}>{getScoreDescription(overallScore)}</p>
-
-                {isPerfectScore && (
-                  <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
-                    <p className="text-emerald-700 font-medium">
-                      Congratulations! You've achieved perfect balance across all areas of your life. This is truly
-                      remarkable and reflects your dedication to holistic well-being.
-                    </p>
-                  </div>
-                )}
-
-                {!isPerfectScore && isExcellentScore && (
-                  <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
-                    <p className="text-emerald-700 font-medium">
-                      Congratulations! Your excellent score shows you've developed strong work-life balance habits.
-                      You're already implementing many effective strategies in your daily life.
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <div className="space-y-4">
-                <h4 className="font-medium">Category Breakdown</h4>
-                {results.map((result) => {
-                  const percentage = Math.round(result.percentage)
-                  const color = percentage < 40 ? "#dc3545" : percentage < 70 ? "#ffc107" : "#28a745"
-
-                  return (
-                    <div key={result.category} className="space-y-1">
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-2">
-                          {categoryIcons[result.category]}
-                          <span>{categoryLabels[result.category]}</span>
-                        </div>
-                        <span style={{ color: color }}>{percentage}%</span>
-                      </div>
-                      <Progress value={percentage} className="h-2" />
-                    </div>
-                  )
-                })}
-              </div>
-
-              <div className="space-y-4">
-                <h4 className="font-medium">
-                  {isExcellentScore ? "Top Recommendations to Maintain Your Balance" : "Top Recommendations"}
-                </h4>
-                <div className="grid gap-4">
-                  {results.slice(0, 2).map((result) => (
-                    <Card key={result.category}>
-                      <CardHeader className="pb-2">
-                        <div className="flex items-center gap-2">
-                          {categoryIcons[result.category]}
-                          <CardTitle className="text-base">
-                            {isExcellentScore
-                              ? `Maintain Your ${categoryLabels[result.category]}`
-                              : `Improve Your ${categoryLabels[result.category]}`}
-                          </CardTitle>
-                        </div>
-                        <CardDescription>Current score: {Math.round(result.percentage)}%</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <ul className="list-disc pl-5 space-y-1">
-                          {recommendations[result.category].slice(0, 3).map((rec, index) => (
-                            <li key={index} className="text-sm">
-                              {rec}
-                            </li>
-                          ))}
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-
-              {/* Cherry Blossom Feedback - Now based on lowest scores */}
-              <Card className="border-[#E26C73] bg-rose-50">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base text-[#E26C73] flex items-center gap-2">
-                    <Image
-                      src="/images/logo.png"
-                      alt="Cherry Blossom"
-                      width={24}
-                      height={24}
-                      className="rounded-full"
-                    />
-                    Cherry Blossom's Feedback
-                  </CardTitle>
-                  <CardDescription>
-                    {isExcellentScore
-                      ? "Your AI Work-Life Balance Guide has reviewed your responses and provided these insights to help maintain your excellent balance:"
-                      : "Your AI Work-Life Balance Guide has reviewed your responses and provided these insights for your lowest scoring areas:"}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="list-disc pl-5 space-y-1 text-sm">
-                    {personalizedFeedback.map((item, index) => (
-                      <li key={index}>
-                        <strong>{categoryLabels[item.category]}:</strong>{" "}
-                        {isExcellentScore
-                          ? `Continue your great work in ${categoryLabels[item.category].toLowerCase()} by ${item.feedback}`
-                          : item.feedback}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="border-[#E26C73] bg-rose-50">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base text-[#E26C73] flex items-center gap-2">
-                    <Image
-                      src="/images/logo.png"
-                      alt="Cherry Blossom"
-                      width={24}
-                      height={24}
-                      className="rounded-full"
-                    />
-                    Get Ongoing Support From Cherry Blossom
-                  </CardTitle>
-                  <CardDescription>
-                    {isExcellentScore
-                      ? "This FREE audit, created by Thought Leader Barbara is her gift to you that keeps on GIV*EN. Cherry Blossom can help you maintain your excellent work-life balance and continue your success journey."
-                      : "This FREE audit, created by Thought Leader Barbara is her gift to you that keeps on GIV*EN -- as you can retake it anytime to access your worklife balance and holistic success. It's also the 1st Step to working with her. Enjoy the journey!"}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="bg-white p-3 rounded-md border border-rose-100">
-                    <h5 className="font-medium text-black font-bold mb-2">
-                      How to Get Deeper Insights from Cherry Blossom:
-                    </h5>
-
-                    {/* Name field moved above the instructions */}
-                    <div className="flex items-center gap-2 mb-4">
-                      <User className="h-5 w-5 text-gray-400" />
-                      <Input
-                        type="text"
-                        placeholder="Enter your full name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                      />
-                    </div>
-
-                    <ol className="list-decimal pl-5 space-y-2 text-sm">
-                      <li>
-                        <strong>Copy your results to share with Cherry Blossom</strong> using the button below
-                      </li>
-                      <li>Click the "Paste Your Results & Chat with Cherry Blossom" button to open ChatGPT</li>
-                      <li>Create a free OpenAI account if you don't have one</li>
-                      <li>Paste your results into the Cherry Blossom chat box</li>
-                      <li>Cherry Blossom will provide personalized guidance based on your results</li>
-                    </ol>
-                    <div className="flex items-center gap-2 mt-3 text-xs text-gray-600">
-                      <Info className="h-4 w-4" />
-                      <span>
-                        A free OpenAI account is required to access Cherry Blossom. Sign up at{" "}
-                        <a
-                          href="https://chat.openai.com/auth/login"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#E26C73] underline"
-                        >
-                          chat.openai.com
-                        </a>
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="bg-white p-4 rounded-md border-2 border-[#E26C73] shadow-md">
-                      <div className="flex items-center justify-between mb-3">
-                        <label className="text-base font-bold text-[#E26C73]">Your Results for Cherry Blossom:</label>
-                        <Button
-                          onClick={copyCherryBlossomPrompt}
-                          variant="outline"
-                          className="bg-[#5D9D61] hover:bg-[#4c8050] text-white py-3 text-base font-bold"
-                          size="sm"
-                        >
-                          {isCherryPromptCopied ? (
-                            <>
-                              <Check className="mr-1 h-4 w-4" />
-                              Copied!
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="mr-1 h-4 w-4" />
-                              Copy
-                            </>
-                          )}
-                        </Button>
-                      </div>
-                      <div className="relative">
-                        <textarea
-                          ref={cherryBlossomPromptRef}
-                          className="w-full h-40 p-3 text-base bg-gray-50 text-gray-800 border border-gray-300 rounded-md font-medium resize-none focus:outline-none focus:ring-2 focus:ring-[#E26C73] focus:border-transparent"
-                          value={generateCherryBlossomPrompt()}
-                          readOnly
-                          onClick={(e) => e.currentTarget.select()}
-                        />
-                        {!isCherryPromptCopied && (
-                          <div className="absolute top-2 right-2 bg-white/80 px-2 py-1 rounded text-xs text-gray-600 pointer-events-none">
-                            Click to select all
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <Button
-                      onClick={copyCherryBlossomPrompt}
-                      className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white py-3 text-base font-bold"
-                    >
-                      {isCherryPromptCopied ? (
-                        <>
-                          <Check className="mr-2 h-5 w-5" />
-                          Copied Successfully!
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="mr-2 h-5 w-5" />
-                          Copy Your Results For Cherry Blossom
-                        </>
-                      )}
-                    </Button>
-                  </div>
-
-                  <ButtonLink
-                    href="https://chatgpt.com/g/g-67f5422677308191aa28a86d8ae5084e-free-work-life-balance-audit-for-women-founders"
-                    className="bg-[#E26C73] hover:bg-[#d15964] text-white flex items-center justify-center"
-                  >
-                    <ExternalLink className="mr-2 h-4 w-4" />
-                    Click Here to Paste Your Results & Chat with Cherry Blossom
-                    <Flower className="ml-2 h-4 w-4 text-pink-300 font-extrabold" />
-                  </ButtonLink>
-
-                  <Button onClick={handleReset} className="w-full bg-[#5D9D61] hover:bg-[#4c8050] text-white">
-                    <RefreshCw className="mr-2 h-4 w-4" />
-                    Retake the Audit
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          )}
-
           {!isResultsPage && (
             <div className="flex justify-between mt-6">
               {currentStep > 0 ? (
-                <Button variant="outline" onClick={handlePrevious}>
+                <Button variant="outline" onClick={handlePrevious} className="px-4 py-2">
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   Previous
                 </Button>
@@ -913,7 +603,7 @@ I'd like your guidance on improving these areas. What specific strategies would 
               <Button
                 onClick={handleNext}
                 disabled={!answers[currentQuestion?.id]}
-                className="bg-[#E26C73] hover:bg-[#d15964] text-white"
+                className="bg-brand-pink hover:bg-pink-600 text-white px-4 py-2"
               >
                 {isLastQuestion ? "See Results" : "Next"}
                 <ArrowRight className="ml-2 h-4 w-4" />

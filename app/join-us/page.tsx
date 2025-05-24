@@ -4,7 +4,8 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Clock } from 'lucide-react'
+import { ArrowLeft } from "lucide-react"
+import CherryBlossomConfetti from "@/components/cherry-blossom-confetti"
 
 export default function JoinUsPage() {
   const [timeLeft, setTimeLeft] = useState({
@@ -39,59 +40,92 @@ export default function JoinUsPage() {
   }, [targetDate])
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-white py-4 px-6 flex items-center justify-between border-b">
+    <div className="min-h-screen flex flex-col relative">
+      {/* Cherry Blossom Confetti */}
+      <CherryBlossomConfetti duration={0} speed="slow" />
+
+      <header className="bg-white py-4 px-6 flex items-center justify-between border-b border-brand-tan">
         <div className="flex items-center">
           <Image src="/images/logo.png" alt="Make Time For More™" width={40} height={40} className="rounded-full" />
-          <span className="ml-2 font-medium">Make Time For More™</span>
+          <span className="ml-2 brand-title text-brand-pink">Make Time For More™</span>
         </div>
         <div className="flex items-center space-x-4">
           <Link href="/" className="flex items-center">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" className="text-black hover:bg-brand-tan">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Retake The Audit
             </Button>
           </Link>
           <Link href="/learn-more">
-            <Button variant="ghost" size="sm">Learn More</Button>
+            <Button variant="ghost" size="sm" className="text-black hover:bg-brand-tan">
+              Learn More
+            </Button>
           </Link>
           <Link href="/join-us">
-            <Button variant="ghost" size="sm">Join Us</Button>
+            <Button variant="ghost" size="sm" className="text-black hover:bg-brand-tan">
+              Join Us
+            </Button>
           </Link>
           <Link href="/apply">
-            <Button className="bg-[#5D9D61] hover:bg-[#4c8050]" size="sm">APPLY NOW!</Button>
+            <Button className="bg-brand-green hover:bg-green-600 text-white" size="sm">
+              APPLY NOW!
+            </Button>
           </Link>
           <Link href="https://www.maketimeformore.com" target="_blank">
-            <Button variant="outline" size="sm">Visit Our Website</Button>
+            <Button variant="outline" size="sm" className="border-black text-black hover:bg-brand-tan">
+              Visit Our Website
+            </Button>
           </Link>
         </div>
       </header>
 
       <main className="flex-1 container mx-auto px-4 py-8 max-w-4xl">
         <div className="mb-6">
-          <Link href="/" className="inline-flex items-center text-gray-600 hover:text-gray-900">
+          <Link href="/" className="inline-flex items-center text-black hover:text-brand-pink">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Link>
         </div>
 
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <div className="flex justify-center mb-6">
-            <Image src="/images/logo.png" alt="Make Time For More Logo" width={100} height={100} className="rounded-full" />
+            <Image
+              src="/images/logo.png"
+              alt="Make Time For More Logo"
+              width={100}
+              height={100}
+              className="rounded-full"
+            />
           </div>
-          
-          <h1 className="text-2xl md:text-3xl font-medium text-[#5D9D61] mb-6">
-            Join Us for a 7 Day Reset, our 14 Day Momentum Builder or the 
-            21-Day Habit Building Cycle + 1 Week Recovery Break = The 28 
-            Day Transformation Cycle For The Month!
-          </h1>
 
-          {/* Countdown Timer - FIXED TEXT HERE */}
-          <div className="bg-gradient-to-r from-[#E26C73] to-[#5D9D61] text-white rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-medium mb-4">
-              Counting Down to Our 28-Day Work-Life Balance Cycle In June!
-            </h2>
-            
+          <h1 className="text-3xl brand-title text-brand-green mb-6">Make Time For More™</h1>
+
+          <h2 className="text-2xl brand-subtitle text-black mb-6">Work-Life Balance Experience</h2>
+        </div>
+
+        {/* Hero Image with Cherry Blossoms */}
+        <div className="mb-8 flex justify-center">
+          <div className="relative">
+            <Image
+              src="/images/women-tea-cherry-blossoms.png"
+              alt="Women enjoying tea under cherry blossoms"
+              width={600}
+              height={400}
+              className="rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+
+        <div className="text-center mb-8">
+          <h3 className="text-xl header-bold text-brand-green mb-6">
+            Join Us for a 7 Day Reset, our 14 Day Momentum Builder or the 21-Day Habit Building Cycle + 1 Week Recovery
+            Break = The 28 Day Transformation Cycle For The Month!
+          </h3>
+
+          {/* Countdown Timer */}
+          <div className="bg-gradient-to-r from-brand-pink to-brand-green text-white rounded-lg p-6 mb-8">
+            <h2 className="text-xl header-bold mb-4">Counting Down to Our 28-Day Work-Life Balance Cycle In June!</h2>
+
             <div className="flex justify-center space-x-4 mb-4">
               <div className="text-center">
                 <div className="text-4xl font-bold">{timeLeft.days}</div>
@@ -110,35 +144,29 @@ export default function JoinUsPage() {
                 <div className="text-sm">SECS</div>
               </div>
             </div>
-            
-            <p className="italic">
-              Reset Your Rhythms & Reclaim Your Time As You Make Time For More.
-            </p>
+
+            <p className="italic">Reset Your Rhythms & Reclaim Your Time As You Make Time For More.</p>
           </div>
 
           <div className="text-center mb-8">
-            <h3 className="text-lg font-medium mb-4">
+            <h3 className="text-lg header-bold mb-4 text-black">
               Sunday Kick-Off Begins 1:PM ET | Monday - Thursday Co-Working Begins 9:AM ET
             </h3>
           </div>
 
-          <div className="border border-red-200 bg-red-50 rounded-lg p-6 text-center">
-            <h3 className="text-xl text-red-500 font-medium mb-4">
-              Important Enrollment Deadline
-            </h3>
-            <p className="text-gray-700">
-              You must complete the enrollment process by Thursday, 10:00 PM EST to attend the
-              Sunday Kick-Off and start with the group.
+          <div className="border border-brand-pink bg-red-50 rounded-lg p-6 text-center">
+            <h3 className="text-xl text-brand-pink header-bold mb-4">Important Enrollment Deadline</h3>
+            <p className="text-black">
+              You must complete the enrollment process by Thursday, 10:00 PM EST to attend the Sunday Kick-Off and start
+              with the group.
             </p>
           </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-medium text-[#E26C73] mb-4">
-              What You'll Experience
-            </h3>
-            <ul className="list-disc pl-5 space-y-2">
+          <div className="bg-white rounded-lg shadow-md p-6 border border-brand-tan">
+            <h3 className="text-xl header-bold text-brand-pink mb-4">What You'll Experience</h3>
+            <ul className="list-disc pl-5 space-y-2 text-black">
               <li>Daily co-working sessions with accountability</li>
               <li>Weekly planning and reflection workshops</li>
               <li>Access to our private community</li>
@@ -147,11 +175,9 @@ export default function JoinUsPage() {
             </ul>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-medium text-[#5D9D61] mb-4">
-              Who This Is For
-            </h3>
-            <ul className="list-disc pl-5 space-y-2">
+          <div className="bg-white rounded-lg shadow-md p-6 border border-brand-tan">
+            <h3 className="text-xl header-bold text-brand-green mb-4">Who This Is For</h3>
+            <ul className="list-disc pl-5 space-y-2 text-black">
               <li>Women entrepreneurs feeling overwhelmed</li>
               <li>Business owners seeking better work-life balance</li>
               <li>Professionals wanting to reclaim their time</li>
@@ -163,17 +189,15 @@ export default function JoinUsPage() {
 
         <div className="text-center">
           <Link href="/apply">
-            <Button className="bg-[#E26C73] hover:bg-[#d15964] text-white px-8 py-6 text-xl">
+            <Button className="bg-brand-pink hover:bg-pink-600 text-white px-8 py-6 text-xl header-bold">
               Apply Now To Join Us
             </Button>
           </Link>
-          <p className="mt-4 text-gray-600">
-            Limited spots available. Application required to ensure a good fit.
-          </p>
+          <p className="mt-4 text-black">Limited spots available. Application required to ensure a good fit.</p>
         </div>
       </main>
 
-      <footer className="bg-gray-100 py-6 text-center text-gray-600">
+      <footer className="bg-brand-tan py-6 text-center text-black">
         <p>© 2025 Make Time For More™. All rights reserved.</p>
       </footer>
     </div>

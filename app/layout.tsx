@@ -1,12 +1,11 @@
+import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from 'next/font/google'
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
-
 export const metadata: Metadata = {
-  title: "Make Time For More Audit | Work-Life Balance Assessment",
-  description: "Assess your work-life balance with our free 15-question audit based on 13 Core Life Value Areas.",
+  title: "v0 App",
+  description: "Created with v0",
+  generator: "v0.dev",
 }
 
 export default function RootLayout({
@@ -16,7 +15,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>{children}</body>
     </html>
   )
 }
