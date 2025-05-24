@@ -1,0 +1,15 @@
+export const categoryLabels = {
+  timeManagement: "Time Management",
+  energyLevels: "Energy Levels",
+  relationships: "Personal Relationships",
+  selfCare: "Self-Care",
+  mindfulness: "Mindfulness & Stress Reduction",
+  purpose: "Sense of Purpose",
+  finances: "Financial Well-being",
+  environment: "Supportive Environment",
+  contribution: "Community Contribution",
+  learning: "Continuous Learning",
+  creativity: "Creative Expression",
+  spirituality: "Spiritual Connection",
+  celebration: "Celebration & Fun",
+}

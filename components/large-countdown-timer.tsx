@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react"
 import CherryBlossomConfetti from "./cherry-blossom-confetti"
 
-interface CountdownTimerProps {
+interface LargeCountdownTimerProps {
   className?: string
 }
 
-const CountdownTimer = ({ className = "" }: CountdownTimerProps) => {
+export default function LargeCountdownTimer({ className = "" }: LargeCountdownTimerProps) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -125,7 +125,7 @@ const CountdownTimer = ({ className = "" }: CountdownTimerProps) => {
   }, [])
 
   return (
-    <div className="space-y-3 relative">
+    <div className="space-y-4 relative">
       <CherryBlossomConfetti duration={8} speed="fast" density="medium" />
       <p className="text-center font-bold text-2xl">
         Counting Down to Our 28-Day Work-Life Balance Cycle In {currentMonth}!
@@ -152,5 +152,3 @@ const CountdownTimer = ({ className = "" }: CountdownTimerProps) => {
     </div>
   )
 }
-
-export default CountdownTimer
