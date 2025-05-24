@@ -105,7 +105,7 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
             </p>
           </div>
 
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-3">
             <Button
               onClick={() =>
                 window.open(
@@ -113,7 +113,7 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
                   "_blank",
                 )
               }
-              className={`${isBlinking ? "bg-[#5D9D61] animate-pulse" : "bg-[#5D9D61]"} hover:bg-[#4c8050] text-white relative py-4 font-bold w-full border-2 border-white`}
+              className={`${isBlinking ? "bg-[#5D9D61] animate-pulse" : "bg-[#4c8050]"} text-white relative py-6 font-bold`}
             >
               <div className="absolute -left-2 top-1/2 transform -translate-y-1/2">
                 <ArrowRight className="h-5 w-5 animate-bounce" />
@@ -130,7 +130,7 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
                 onClose()
                 router.push("/learn-more")
               }}
-              className="bg-[#E26C73] hover:bg-[#d15964] text-white w-full py-4 border-2 border-white"
+              className="bg-[#E26C73] hover:bg-[#d15964] text-white"
             >
               <ExternalLink className="mr-2 h-4 w-4" />
               Learn More
@@ -141,7 +141,7 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
                 onClose()
                 router.push("/join-us")
               }}
-              className="bg-[#E26C73] hover:bg-[#d15964] text-white w-full py-4 border-2 border-white"
+              className="bg-[#E26C73] hover:bg-[#d15964] text-white"
             >
               <ExternalLink className="mr-2 h-4 w-4" />
               Join Us
@@ -149,7 +149,7 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
 
             <ButtonLink
               href="https://chatgpt.com/g/g-67f5422677308191aa28a86d8ae5084e-free-work-life-balance-audit-for-women-founders"
-              className="bg-[#E26C73] hover:bg-[#d15964] text-white flex items-center justify-center w-full py-4 border-2 border-white"
+              className="bg-[#E26C73] hover:bg-[#d15964] text-white flex items-center justify-center"
             >
               <ExternalLink className="mr-2 h-4 w-4" />
               Chat with Cherry Blossom
@@ -161,17 +161,13 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
                 onClose()
                 router.push("/my-results")
               }}
-              className="bg-[#E26C73] hover:bg-[#d15964] text-white w-full py-4 border-2 border-white"
+              className="bg-white border border-[#E26C73] text-[#E26C73] hover:bg-rose-50"
             >
               <FileText className="mr-2 h-4 w-4" />
               Back to Results
             </Button>
 
-            <Button
-              onClick={onClose}
-              variant="outline"
-              className="mt-2 w-full bg-[#E26C73] hover:bg-[#d15964] text-white py-4 border-2 border-white"
-            >
+            <Button onClick={onClose} variant="outline" className="mt-2">
               Close
             </Button>
           </div>

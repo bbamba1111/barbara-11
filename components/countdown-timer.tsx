@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import CherryBlossomConfetti from "./cherry-blossom-confetti"
 
 interface CountdownTimerProps {
   className?: string
@@ -14,6 +13,7 @@ const CountdownTimer = ({ className = "" }: CountdownTimerProps) => {
     minutes: 0,
     seconds: 0,
   })
+  const [targetWeekMessage, setTargetWeekMessage] = useState<string>("")
   const [currentMonth, setCurrentMonth] = useState<string>("")
 
   useEffect(() => {
@@ -33,8 +33,24 @@ const CountdownTimer = ({ className = "" }: CountdownTimerProps) => {
       const seconds = Math.floor((diff % (1000 * 60)) / 1000)
 
       // Set which Sunday we're counting down to
+      const sundayNumber = getSundayNumberInMonth(nextTargetSunday)
       const monthName = nextTargetSunday.toLocaleString("default", { month: "long" })
       setCurrentMonth(monthName)
+
+      // Set the appropriate message based on which week we're counting down to
+      if (sundayNumber === 1) {
+        setTargetWeekMessage(
+          "The 7-Day Work-Life Balance Reset Experience where You Reset Your Rhythms and Reclaim Your Time In One Powerful Week This Month!",
+        )
+      } else if (sundayNumber === 2) {
+        setTargetWeekMessage(
+          "Our 14-Day Momentum Building Week -- Perfect if you're ready to start building real momentum toward your desired work-lifestyle!",
+        )
+      } else if (sundayNumber === 3) {
+        setTargetWeekMessage(
+          "Our 21-Day Habit Building week followed by our 1-Week Recovery Break -- Perfect if you are truly ready to disrupt hustle culture, and reset your work-life balance habits for sustainable success.",
+        )
+      }
 
       return { days, hours, minutes, seconds }
     }
@@ -124,13 +140,23 @@ const CountdownTimer = ({ className = "" }: CountdownTimerProps) => {
     return () => clearInterval(timer)
   }, [])
 
-  return (
-    <div className="space-y-3 relative">
-      <CherryBlossomConfetti duration={8} speed="fast" density="medium" />
-      <p className="text-center font-bold text-2xl">
-        Counting Down to Our 28-Day Work-Life Balance Cycle In {currentMonth}!
-      </p>
+  // Get the week number label based on the message
+  const getWeekLabel = () => {
+    if (targetWeekMessage.includes("7-Day")) {
+      return "The 1st Week"
+    } else if (targetWeekMessage.includes("14-Day")) {
+      return "The 2nd Week"
+    } else if (targetWeekMessage.includes("21-Day")) {
+      return "The 3rd Week"
+    }
+    return ""
+  }
 
+  return (
+    <div className="space-y-3">
+      <p className="text-center font-bold text-xl">
+        Counting Down to {getWeekLabel()} of Work-Life Balance in {currentMonth}
+      </p>
       <div className={`flex justify-center space-x-6 ${className}`}>
         <div className="text-center">
           <div className="text-4xl font-bold">{timeLeft.days}</div>
@@ -149,6 +175,7 @@ const CountdownTimer = ({ className = "" }: CountdownTimerProps) => {
           <div className="text-sm uppercase font-medium">Secs</div>
         </div>
       </div>
+      <p className="text-md text-center mt-2 max-w-2xl mx-auto px-8">{targetWeekMessage}</p>
     </div>
   )
 }

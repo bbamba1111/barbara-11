@@ -12,41 +12,41 @@ import { generatePdf } from "@/utils/generate-pdf"
 import { generateCherryBlossomPrompt } from "@/utils/generate-cherry-blossom-prompt"
 import { ButtonLink } from "@/components/ui/button-link"
 import BetaInvitation from "@/components/beta-invitation"
-import type { Result } from "@/types/result" // Declare the Result variable
 
 export type Category =
-  | "charitableContribution"
-  | "recreationalJoy"
-  | "spiritualLife"
-  | "mentalClarity"
-  | "physicalMovement"
-  | "physicalNourishment"
-  | "physicalSleep"
-  | "emotionalBalance"
-  | "personalGrowth"
-  | "intellectualGrowth"
-  | "professionalVisibility"
-  | "financialFocus"
-  | "environmentalBalance"
-  | "relationalPresence"
-  | "socialConnection"
+  | "timeManagement"
+  | "energyLevels"
+  | "relationships"
+  | "selfCare"
+  | "mindfulness"
+  | "purpose"
+  | "finances"
+  | "environment"
+  | "contribution"
+  | "learning"
+  | "creativity"
+  | "spirituality"
+  | "celebration"
+
+export type Result = {
+  category: Category
+  percentage: number
+}
 
 const categoryLabels: Record<Category, string> = {
-  charitableContribution: "Charitable Contribution",
-  recreationalJoy: "Recreational Joy",
-  spiritualLife: "Spiritual Life",
-  mentalClarity: "Mental Clarity",
-  physicalMovement: "Physical Movement",
-  physicalNourishment: "Physical Nourishment",
-  physicalSleep: "Physical Sleep",
-  emotionalBalance: "Emotional Balance",
-  personalGrowth: "Personal Growth",
-  intellectualGrowth: "Intellectual Growth",
-  professionalVisibility: "Professional Visibility",
-  financialFocus: "Financial Focus",
-  environmentalBalance: "Environmental Balance",
-  relationalPresence: "Relational Presence",
-  socialConnection: "Social Connection",
+  timeManagement: "Time Management",
+  energyLevels: "Energy Levels",
+  relationships: "Personal Relationships",
+  selfCare: "Self-Care",
+  mindfulness: "Mindfulness & Stress Reduction",
+  purpose: "Sense of Purpose",
+  finances: "Financial Well-being",
+  environment: "Supportive Environment",
+  contribution: "Community Contribution",
+  learning: "Continuous Learning",
+  creativity: "Creative Expression",
+  spirituality: "Spiritual Connection",
+  celebration: "Celebration & Fun",
 }
 
 const WorkLifeBalanceAudit = ({ onClose }: { onClose: () => void }) => {
@@ -60,83 +60,73 @@ const WorkLifeBalanceAudit = ({ onClose }: { onClose: () => void }) => {
 
   const questions = [
     {
-      category: "spiritualLife" as Category,
-      text: "In the past 30 days, how often have you connected to your spiritual life through prayer, meditation, or nature?",
+      category: "timeManagement" as Category,
+      text: "I effectively manage my time between work and personal life.",
     },
     {
-      category: "mentalClarity" as Category,
-      text: "In the past 30 days, how often have you felt focused and clear in your thinking?",
+      category: "energyLevels" as Category,
+      text: "I consistently have enough energy for both work and personal activities.",
     },
     {
-      category: "physicalMovement" as Category,
-      text: "In the past 30 days, how often have you engaged in physical movement or exercise?",
+      category: "relationships" as Category,
+      text: "I dedicate enough time and energy to my relationships with family and friends.",
     },
     {
-      category: "physicalNourishment" as Category,
-      text: "In the past 30 days, how often have you nourished your body with healthy foods?",
+      category: "selfCare" as Category,
+      text: "I prioritize activities that promote my physical and mental well-being.",
     },
     {
-      category: "physicalSleep" as Category,
-      text: "In the past 30 days, how often have you gotten adequate, restful sleep?",
+      category: "mindfulness" as Category,
+      text: "I regularly practice mindfulness or stress-reduction techniques.",
     },
     {
-      category: "emotionalBalance" as Category,
-      text: "In the past 30 days, how often have you felt emotionally balanced and stable?",
+      category: "purpose" as Category,
+      text: "I feel a strong sense of purpose in my life, both professionally and personally.",
     },
     {
-      category: "personalGrowth" as Category,
-      text: "In the past 30 days, how often have you engaged in activities for personal growth and development?",
+      category: "finances" as Category,
+      text: "I feel in control of my finances and financial planning.",
     },
     {
-      category: "intellectualGrowth" as Category,
-      text: "In the past 30 days, how often have you engaged in learning or intellectual stimulation?",
+      category: "environment" as Category,
+      text: "My environment (home and work) supports my work-life balance.",
     },
     {
-      category: "professionalVisibility" as Category,
-      text: "In the past 30 days, how often have you maintained visibility and presence in your professional life?",
+      category: "contribution" as Category,
+      text: "I feel I am making a meaningful contribution to my community or the world.",
     },
     {
-      category: "financialFocus" as Category,
-      text: "In the past 30 days, how often have you focused on and managed your financial well-being?",
+      category: "learning" as Category,
+      text: "I am committed to continuous learning and personal growth.",
     },
     {
-      category: "environmentalBalance" as Category,
-      text: "In the past 30 days, how often has your environment supported your work-life balance?",
+      category: "creativity" as Category,
+      text: "I regularly engage in creative activities that bring me joy.",
     },
     {
-      category: "relationalPresence" as Category,
-      text: "In the past 30 days, how often have you been present and engaged in your important relationships?",
+      category: "spirituality" as Category,
+      text: "I nurture my spiritual side, however I define it.",
     },
     {
-      category: "socialConnection" as Category,
-      text: "In the past 30 days, how often have you maintained meaningful social connections?",
-    },
-    {
-      category: "recreationalJoy" as Category,
-      text: "In the past 30 days, how often have you engaged in recreational activities that bring you joy?",
-    },
-    {
-      category: "charitableContribution" as Category,
-      text: "In the past 30 days, how often have you contributed to charitable causes or helped others?",
+      category: "celebration" as Category,
+      text: "I regularly celebrate my achievements and enjoy life's simple pleasures.",
     },
   ]
 
   const [answers, setAnswers] = useState<Record<Category, number>>({
-    charitableContribution: 3,
-    recreationalJoy: 3,
-    spiritualLife: 3,
-    mentalClarity: 3,
-    physicalMovement: 3,
-    physicalNourishment: 3,
-    physicalSleep: 3,
-    emotionalBalance: 3,
-    personalGrowth: 3,
-    intellectualGrowth: 3,
-    professionalVisibility: 3,
-    financialFocus: 3,
-    environmentalBalance: 3,
-    relationalPresence: 3,
-    socialConnection: 3,
+    timeManagement: 50,
+    energyLevels: 50,
+    relationships: 50,
+    selfCare: 50,
+    mindfulness: 50,
+    purpose: 50,
+    finances: 50,
+    environment: 50,
+    contribution: 50,
+    learning: 50,
+    creativity: 50,
+    spirituality: 50,
+    celebration: 50,
   })
 
   const handleAnswerChange = (category: Category, value: number) => {
@@ -147,10 +137,10 @@ const WorkLifeBalanceAudit = ({ onClose }: { onClose: () => void }) => {
   }
 
   const handleSubmit = () => {
-    // Calculate results - convert 1-5 scale to percentages
+    // Calculate results
     const newResults: Result[] = questions.map((question) => ({
       category: question.category,
-      percentage: ((answers[question.category] - 1) / 4) * 100, // Convert 1-5 to 0-100%
+      percentage: answers[question.category],
     }))
     setResults(newResults)
 
@@ -204,87 +194,88 @@ const WorkLifeBalanceAudit = ({ onClose }: { onClose: () => void }) => {
 
   const personalizedFeedback = lowestCategories.map((item) => {
     switch (item.category) {
-      case "charitableContribution":
+      case "timeManagement":
         return {
           category: item.category,
           feedback:
-            "Identify ways to share your expertise that energize rather than drain you. Set clear boundaries around your giving to prevent burnout.",
+            "Consider time-blocking techniques and prioritizing tasks to better manage your time. Review your daily schedule and identify time-wasting activities.",
         }
-      case "recreationalJoy":
+      case "energyLevels":
         return {
           category: item.category,
           feedback:
-            "Schedule time for play and creativity with no productive purpose. Explore new hobbies or revisit ones you've enjoyed in the past.",
+            "Focus on improving your sleep, diet, and exercise habits. Incorporate short breaks during the day to recharge.",
         }
-      case "spiritualLife":
+      case "relationships":
         return {
           category: item.category,
-          feedback: "Take 5-10 minutes each morning to ground yourself through deep breathing or gratitude journaling.",
+          feedback:
+            "Schedule dedicated time for your loved ones and engage in activities you all enjoy. Communicate openly and actively listen to their needs.",
         }
-      case "mentalClarity":
+      case "selfCare":
         return {
           category: item.category,
-          feedback: "Clear mental fog with a quick brain dump of lingering thoughts at the start or end of your day.",
+          feedback:
+            "Make self-care a non-negotiable part of your routine. This could include reading, meditation, or spending time in nature.",
         }
-      case "physicalMovement":
+      case "mindfulness":
         return {
           category: item.category,
-          feedback: "Incorporate 10-minute movement breaks between meetings to energize your body and mind.",
+          feedback:
+            "Practice mindfulness techniques such as deep breathing or meditation to reduce stress. Try to stay present in the moment and avoid multitasking.",
         }
-      case "physicalNourishment":
+      case "purpose":
         return {
           category: item.category,
-          feedback: "Focus on nourishing your body with whole foods and staying hydrated throughout the day.",
+          feedback:
+            "Reflect on your values and passions, and align your daily activities with them. Set meaningful goals and celebrate your progress.",
         }
-      case "physicalSleep":
+      case "finances":
         return {
           category: item.category,
-          feedback: "Establish a consistent sleep schedule and create a relaxing bedtime routine for better rest.",
+          feedback:
+            "Create a budget and track your expenses to gain control over your finances. Seek advice from a financial advisor if needed.",
         }
-      case "emotionalBalance":
+      case "environment":
         return {
           category: item.category,
-          feedback: "Practice emotional awareness and develop healthy coping strategies for stress management.",
+          feedback:
+            "Declutter your workspace and create a calming atmosphere. Set boundaries to protect your personal time and space.",
         }
-      case "personalGrowth":
+      case "contribution":
         return {
           category: item.category,
-          feedback: "Set aside time for self-reflection and pursue activities that challenge you to grow personally.",
+          feedback:
+            "Volunteer your time or donate to causes you care about. Find ways to make a positive impact on your community.",
         }
-      case "intellectualGrowth":
+      case "learning":
         return {
           category: item.category,
-          feedback: "Engage in learning opportunities that stimulate your mind and expand your knowledge base.",
+          feedback:
+            "Enroll in a course, read books, or attend workshops to expand your knowledge. Set aside time each week for learning and personal development.",
         }
-      case "professionalVisibility":
+      case "creativity":
         return {
           category: item.category,
-          feedback: "Maintain your professional presence while setting boundaries to protect your personal time.",
+          feedback:
+            "Engage in creative activities such as painting, writing, or playing music. Allow yourself to experiment and express your unique talents.",
         }
-      case "financialFocus":
+      case "spirituality":
         return {
           category: item.category,
-          feedback: "Create a financial plan and regularly review your progress toward your financial goals.",
+          feedback:
+            "Connect with your spiritual side through prayer, meditation, or spending time in nature. Reflect on your beliefs and values.",
         }
-      case "environmentalBalance":
+      case "celebration":
         return {
           category: item.category,
-          feedback: "Optimize your physical spaces to support both productivity and relaxation.",
-        }
-      case "relationalPresence":
-        return {
-          category: item.category,
-          feedback: "Practice being fully present in your relationships and prioritize quality time with loved ones.",
-        }
-      case "socialConnection":
-        return {
-          category: item.category,
-          feedback: "Nurture your social connections and make time for meaningful interactions with others.",
+          feedback:
+            "Acknowledge your accomplishments and reward yourself for your hard work. Plan fun activities and create lasting memories.",
         }
       default:
         return {
           category: item.category,
-          feedback: "Continue focusing on this area to maintain your work-life balance.",
+          feedback: "No specific feedback available for this category.",
         }
     }
   })
@@ -314,7 +305,7 @@ const WorkLifeBalanceAudit = ({ onClose }: { onClose: () => void }) => {
         <div className="p-4 md:p-8">
           {step === 1 && (
             <>
-              <h2 className="text-3xl font-bold mb-4 text-center">Work-Life Balance Audit</h2>
+              <h2 className="text-2xl font-bold mb-4 text-center">Work-Life Balance Audit</h2>
               <p className="text-gray-600 mb-6 text-center">
                 Answer the following questions to assess your current work-life balance.
               </p>
@@ -327,43 +318,42 @@ const WorkLifeBalanceAudit = ({ onClose }: { onClose: () => void }) => {
                     </CardHeader>
                     <CardContent>
                       <div className="mb-2">
-                        <Label htmlFor={`question-${index}`}>
-                          On a scale from 1 to 5, where 1 = Never and 5 = Consistently:
-                        </Label>
+                        <Label htmlFor={`question-${index}`}>How much do you agree with the statement?</Label>
+                        <p className="text-sm text-gray-500">(0% - Not at all, 100% - Completely)</p>
                       </div>
                       <RadioGroup
                         defaultValue={answers[question.category].toString()}
-                        className="flex flex-col space-y-2"
+                        className="flex flex-col space-y-1"
                         onValueChange={(value) => handleAnswerChange(question.category, Number.parseInt(value, 10))}
                       >
                         <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="1" id={`r1-${index}`} />
-                          <Label htmlFor={`r1-${index}`}>Never (1)</Label>
+                          <RadioGroupItem value="0" id={`r1-${index}`} />
+                          <Label htmlFor={`r1-${index}`}>0%</Label>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="2" id={`r2-${index}`} />
-                          <Label htmlFor={`r2-${index}`}>Rarely (2)</Label>
+                          <RadioGroupItem value="25" id={`r2-${index}`} />
+                          <Label htmlFor={`r2-${index}`}>25%</Label>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="3" id={`r3-${index}`} />
-                          <Label htmlFor={`r3-${index}`}>Sometimes (3)</Label>
+                          <RadioGroupItem value="50" id={`r3-${index}`} />
+                          <Label htmlFor={`r3-${index}`}>50%</Label>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="4" id={`r4-${index}`} />
-                          <Label htmlFor={`r4-${index}`}>Often (4)</Label>
+                          <RadioGroupItem value="75" id={`r4-${index}`} />
+                          <Label htmlFor={`r4-${index}`}>75%</Label>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="5" id={`r5-${index}`} />
-                          <Label htmlFor={`r5-${index}`}>Consistently (5)</Label>
+                          <RadioGroupItem value="100" id={`r5-${index}`} />
+                          <Label htmlFor={`r5-${index}`}>100%</Label>
                         </div>
                       </RadioGroup>
-                      <Progress value={(answers[question.category] - 1) * 25} />
+                      <Progress value={answers[question.category]} />
                     </CardContent>
                   </Card>
                 ))}
               </div>
 
-              <Button onClick={handleSubmit} className="w-full mt-6 bg-[#5D9D61] hover:bg-[#4c8050] text-white">
+              <Button onClick={handleSubmit} className="w-full mt-6">
                 See Results
               </Button>
             </>
@@ -442,18 +432,10 @@ const WorkLifeBalanceAudit = ({ onClose }: { onClose: () => void }) => {
               </section>
 
               <div className="mt-6 flex flex-col space-y-4">
-                <Button
-                  onClick={handleEmailResults}
-                  disabled={!name || !email}
-                  className="bg-[#5D9D61] hover:bg-[#4c8050] text-white"
-                >
+                <Button onClick={handleEmailResults} disabled={!name || !email}>
                   Email Me My Results
                 </Button>
-                <Button
-                  onClick={handleDownloadPdf}
-                  disabled={!name || !email}
-                  className="bg-[#5D9D61] hover:bg-[#4c8050] text-white"
-                >
+                <Button onClick={handleDownloadPdf} disabled={!name || !email}>
                   Download PDF
                 </Button>
                 <ButtonLink
@@ -462,9 +444,7 @@ const WorkLifeBalanceAudit = ({ onClose }: { onClose: () => void }) => {
                 >
                   View HTML Results
                 </ButtonLink>
-                <Button onClick={handleShowBetaInvitation} className="bg-[#5D9D61] hover:bg-[#4c8050] text-white">
-                  Continue with Cherry Blossom
-                </Button>
+                <Button onClick={handleShowBetaInvitation}>Continue with Cherry Blossom</Button>
               </div>
 
               {emailStatus && (

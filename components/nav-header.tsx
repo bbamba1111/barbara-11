@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
 import { hasCompletedAudit } from "@/utils/audit-storage"
-import { Menu, RefreshCw, FileText, Calendar, X, ExternalLink, Info } from "lucide-react"
+import { Menu, RefreshCw, FileText, Calendar, X, ExternalLink } from "lucide-react"
 
 export default function NavHeader() {
   const router = useRouter()
@@ -46,12 +46,8 @@ export default function NavHeader() {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1">
-          <Button
-            variant="ghost"
-            onClick={() => navigateTo("/")}
-            className={`${pathname === "/" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
-          >
+        <nav className="hidden md:flex items-center gap-4">
+          <Button variant="ghost" onClick={() => navigateTo("/")} className={pathname === "/" ? "bg-gray-100" : ""}>
             <RefreshCw className="h-4 w-4 mr-2" />
             Retake The Audit
           </Button>
@@ -60,7 +56,7 @@ export default function NavHeader() {
             <Button
               variant="ghost"
               onClick={() => navigateTo("/my-results")}
-              className={`${pathname === "/my-results" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
+              className={pathname === "/my-results" ? "bg-gray-100" : ""}
             >
               <FileText className="h-4 w-4 mr-2" />
               Back to Your Results
@@ -70,7 +66,7 @@ export default function NavHeader() {
           <Button
             variant="ghost"
             onClick={() => navigateTo("/learn-more")}
-            className={`${pathname === "/learn-more" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
+            className={pathname === "/learn-more" ? "bg-gray-100" : ""}
           >
             <FileText className="h-4 w-4 mr-2" />
             Learn More
@@ -78,27 +74,14 @@ export default function NavHeader() {
 
           <Button
             variant="ghost"
-            onClick={() => navigateTo("/about")}
-            className={`${pathname === "/about" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
-          >
-            <Info className="h-4 w-4 mr-2" />
-            About
-          </Button>
-
-          <Button
-            variant="ghost"
             onClick={() => navigateTo("/join-us")}
-            className={`${pathname === "/join-us" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
+            className={pathname === "/join-us" ? "bg-gray-100" : ""}
           >
             <Calendar className="h-4 w-4 mr-2" />
             Join Us
           </Button>
 
-          <Button
-            variant="ghost"
-            onClick={openApplyNow}
-            className="bg-[#5D9D61] text-white hover:bg-[#4c8050] py-4 border border-white"
-          >
+          <Button variant="ghost" onClick={openApplyNow} className="bg-[#5D9D61] text-white hover:bg-[#4c8050]">
             <ExternalLink className="h-4 w-4 mr-2" />
             APPLY NOW!
           </Button>
@@ -113,11 +96,11 @@ export default function NavHeader() {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white border-b shadow-md">
-          <nav className="flex flex-col p-4 space-y-1">
+          <nav className="flex flex-col p-4">
             <Button
               variant="ghost"
               onClick={() => navigateTo("/")}
-              className={`justify-start ${pathname === "/" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
+              className={`justify-start ${pathname === "/" ? "bg-gray-100" : ""} mb-2`}
             >
               <RefreshCw className="h-4 w-4 mr-2" />
               Retake The Audit
@@ -127,7 +110,7 @@ export default function NavHeader() {
               <Button
                 variant="ghost"
                 onClick={() => navigateTo("/my-results")}
-                className={`justify-start ${pathname === "/my-results" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
+                className={`justify-start ${pathname === "/my-results" ? "bg-gray-100" : ""} mb-2`}
               >
                 <FileText className="h-4 w-4 mr-2" />
                 Back to Your Results
@@ -137,7 +120,7 @@ export default function NavHeader() {
             <Button
               variant="ghost"
               onClick={() => navigateTo("/learn-more")}
-              className={`justify-start ${pathname === "/learn-more" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
+              className={`justify-start ${pathname === "/learn-more" ? "bg-gray-100" : ""} mb-2`}
             >
               <FileText className="h-4 w-4 mr-2" />
               Learn More
@@ -145,17 +128,8 @@ export default function NavHeader() {
 
             <Button
               variant="ghost"
-              onClick={() => navigateTo("/about")}
-              className={`justify-start ${pathname === "/about" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
-            >
-              <Info className="h-4 w-4 mr-2" />
-              About
-            </Button>
-
-            <Button
-              variant="ghost"
               onClick={() => navigateTo("/join-us")}
-              className={`justify-start ${pathname === "/join-us" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
+              className={`justify-start ${pathname === "/join-us" ? "bg-gray-100" : ""} mb-2`}
             >
               <Calendar className="h-4 w-4 mr-2" />
               Join Us
@@ -164,7 +138,7 @@ export default function NavHeader() {
             <Button
               variant="ghost"
               onClick={openApplyNow}
-              className="justify-start bg-[#5D9D61] text-white hover:bg-[#4c8050] py-4 border border-white"
+              className="justify-start bg-[#5D9D61] text-white hover:bg-[#4c8050] mb-2"
             >
               <ExternalLink className="h-4 w-4 mr-2" />
               APPLY NOW!

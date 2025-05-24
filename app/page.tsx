@@ -1,127 +1,88 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import WorkLifeBalanceAudit from "@/components/WorkLifeBalanceAudit"
-import { hasCompletedAudit } from "@/utils/audit-storage"
-import { X } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import CherryBlossomConfetti from "@/components/cherry-blossom-confetti"
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import WorkLifeBalanceAudit from "@/components/work-life-balance-audit"
+import FollowUpPopup from "@/components/follow-up-popup"
+import { hasCompletedAudit } from "@/utils/audit-storage"
+import { useRouter } from "next/navigation"
+import { RefreshCw, FileText } from "lucide-react"
 
 export default function Home() {
-  const [showWelcome, setShowWelcome] = useState(false)
   const [showAudit, setShowAudit] = useState(false)
+  const [showFollowUp, setShowFollowUp] = useState(false)
   const [hasCompletedAuditBefore, setHasCompletedAuditBefore] = useState(false)
-  const [showWelcomeConfetti, setShowWelcomeConfetti] = useState(false)
+  const router = useRouter()
 
+  // Check localStorage on component mount to see if user has completed the audit
   useEffect(() => {
-    // Check if user has completed the audit before
     const auditCompleted = hasCompletedAudit()
     setHasCompletedAuditBefore(auditCompleted)
 
-    // Check if user has chosen not to see the welcome popup
-    const dontShowWelcome = localStorage.getItem("dontShowAuditWelcome") === "true"
-
-    if (dontShowWelcome) {
-      setShowAudit(true)
-    } else {
-      setShowWelcome(true)
+    // Only show follow-up popup for returning visitors who completed the audit
+    if (auditCompleted && document.referrer !== "") {
+      setShowFollowUp(true)
     }
-
-    // Add confetti after 3 seconds for new visitors
-    const timer = setTimeout(() => {
-      setShowWelcomeConfetti(true)
-      // Hide confetti after 8 seconds
-      const hideTimer = setTimeout(() => {
-        setShowWelcomeConfetti(false)
-      }, 8000)
-      return () => clearTimeout(hideTimer)
-    }, 3000)
-
-    return () => clearTimeout(timer)
   }, [])
 
-  // Function to start the audit from welcome popup
-  const handleStartAudit = () => {
-    setShowWelcome(false)
-    setShowAudit(true)
+  // Function to handle audit completion
+  const handleAuditComplete = () => {
+    setHasCompletedAuditBefore(true)
+    // Don't close the audit - let the user see their results
   }
 
-  // Function to handle "don't show again" checkbox
-  const handleDontShowAgain = (checked: boolean) => {
-    if (checked) {
-      localStorage.setItem("dontShowAuditWelcome", "true")
-    } else {
-      localStorage.removeItem("dontShowAuditWelcome")
-    }
+  // Function to view previous results
+  const viewPreviousResults = () => {
+    router.push("/my-results")
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-24 bg-gradient-to-b from-white to-rose-50 relative rounded-3xl">
-      {showWelcomeConfetti && <CherryBlossomConfetti duration={8} speed="fast" density="medium" />}
-
-      {showWelcome && (
-        <div className="fixed inset-0 z-50 overflow-auto bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white shadow-lg overflow-hidden max-w-[600px] min-h-[800px] relative m-4 w-full p-8">
-            <button
-              onClick={() => setShowWelcome(false)}
-              className="absolute right-4 top-4 rounded-full opacity-70 transition-opacity hover:opacity-100 focus:outline-none z-10 p-2 hover:bg-gray-100"
-            >
-              <X className="h-4 w-4" />
-            </button>
-
-            {/* Move content down by 50% - increased top spacing significantly */}
-            <div className="h-60"></div>
-
-            <div className="flex justify-center mb-4">
-              <Image
-                src="/images/logo.png"
-                alt="Make Time For More Logo"
-                width={135}
-                height={135}
-                className="rounded-full"
-              />
-            </div>
-
-            <h1 className="text-4xl font-bold text-center mb-2 text-[#E26C73]">Make Time For More™</h1>
-
-            <h2 className="text-2xl font-semibold text-center mb-8 text-black">Work-Life Balance Audit</h2>
-
-            <p className="text-center text-black mb-6 px-4 text-lg leading-relaxed">
-              This is your personal 15-question Work-Life Balance Audit based on the 13 Core Life Value Areas we focus
-              on inside the Make Time For More™ Work-Life Balance Experience.
-            </p>
-
-            <div className="flex justify-center mb-6">
-              <Button
-                onClick={handleStartAudit}
-                className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white px-12 py-4 text-xl font-bold border-2 border-white"
-              >
-                Take The FREE Audit Now!
-              </Button>
-            </div>
-
-            <p className="text-center text-black mb-6 text-lg">This is not about judgment — this is about clarity.</p>
-
-            <div className="flex items-center justify-center mb-8">
-              <input
-                type="checkbox"
-                id="dontShow"
-                className="mr-3 w-4 h-4 rounded"
-                onChange={(e) => handleDontShowAgain(e.target.checked)}
-              />
-              <label htmlFor="dontShow" className="text-base text-black">
-                Don't show this again
-              </label>
-            </div>
-
-            {/* Reduced bottom spacing since content moved down */}
-            <div className="h-4"></div>
-          </div>
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-24 bg-gradient-to-b from-white to-rose-50">
+      <div className="max-w-3xl text-center">
+        <div className="mb-6 flex justify-center">
+          <Image
+            src="/images/logo.png"
+            alt="Make Time For More Logo"
+            width={120}
+            height={120}
+            className="rounded-full shadow-lg cursor-pointer"
+            onClick={hasCompletedAuditBefore ? viewPreviousResults : () => setShowAudit(true)}
+          />
         </div>
-      )}
+        <h1 className="text-4xl font-bold tracking-tight mb-4 text-[#E26C73]">Make Time For More™</h1>
+        <h2 className="text-2xl font-medium mb-6 text-gray-700">Work-Life Balance Audit</h2>
+        <p className="text-lg text-gray-600 mb-4">
+          This is your personal 15-question Work-Life Balance Audit based on the 13 Core Life Value Areas we focus on
+          inside the Make Time For More™ Work-Life Balance Experience.
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <Button
+            size="lg"
+            onClick={() => setShowAudit(true)}
+            className="bg-[#E26C73] hover:bg-[#d15964] text-white font-medium px-8 py-6 rounded-md shadow-md"
+          >
+            <RefreshCw className="mr-2 h-5 w-5" />
+            Take The Audit
+          </Button>
 
-      {showAudit && <WorkLifeBalanceAudit onClose={() => setShowAudit(false)} />}
+          {hasCompletedAuditBefore && (
+            <Button
+              size="lg"
+              onClick={viewPreviousResults}
+              className="bg-[#5D9D61] hover:bg-[#4c8050] text-white font-medium px-8 py-6 rounded-md shadow-md"
+            >
+              <FileText className="mr-2 h-5 w-5" />
+              Back to Your Results
+            </Button>
+          )}
+        </div>
+        <p className="mt-4 text-sm text-gray-500">This is not about judgment — this is about clarity.</p>
+      </div>
+
+      {showAudit && <WorkLifeBalanceAudit onClose={() => setShowAudit(false)} onComplete={handleAuditComplete} />}
+
+      {showFollowUp && <FollowUpPopup onClose={() => setShowFollowUp(false)} />}
     </main>
   )
 }
