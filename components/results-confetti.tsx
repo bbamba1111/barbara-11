@@ -9,19 +9,36 @@ interface ResultsConfettiProps {
 }
 
 export default function ResultsConfetti({ score, speed = "normal" }: ResultsConfettiProps) {
-  const [showConfetti, setShowConfetti] = useState(true)
+  const [showConfetti, setShowConfetti] = useState(false)
+  const [hasAnimated, setHasAnimated] = useState(false)
 
   useEffect(() => {
-    // Hide confetti after 10 seconds
-    const timer = setTimeout(() => {
-      setShowConfetti(false)
-    }, 10000)
+    // Only show confetti for good scores (above 70%) and only once per session
+    if (score >= 70 && !hasAnimated) {
+      // Slight delay to ensure component is fully mounted
+      const timer = setTimeout(() => {
+        setShowConfetti(true)
+        setHasAnimated(true)
+      }, 500)
 
-    return () => clearTimeout(timer)
-  }, [])
+      // Hide confetti after 10 seconds
+      const hideTimer = setTimeout(() => {
+        setShowConfetti(false)
+      }, 10000)
 
-  // Only show confetti for good scores (above 70%)
-  if (score < 70 || !showConfetti) return null
+      return () => {
+        clearTimeout(timer)
+        clearTimeout(hideTimer)
+      }
+    }
+  }, [score, hasAnimated])
 
-  return <RepeatedConfetti burstCount={3} burstDuration={3} interval={3000} />
+  // Don't render anything if we're not showing confetti
+  if (!showConfetti) return null
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-50">
+      <RepeatedConfetti burstCount={3} burstDuration={3} interval={3000} />
+    </div>
+  )
 }

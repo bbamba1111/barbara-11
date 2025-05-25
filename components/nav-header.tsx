@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
 import { hasCompletedAudit } from "@/utils/audit-storage"
-import { Menu, RefreshCw, FileText, Calendar, X, ExternalLink, Info } from "lucide-react"
+import { Menu, RefreshCw, X, ExternalLink, Home } from "lucide-react"
 
 export default function NavHeader() {
   const router = useRouter()
@@ -30,8 +30,20 @@ export default function NavHeader() {
     setIsMenuOpen(false)
   }
 
+  const handleRetakeAudit = () => {
+    // Clear the "don't show again" setting so welcome popup shows
+    localStorage.removeItem("dontShowAuditWelcome")
+    navigateTo("/")
+  }
+
+  const handleBackHome = () => {
+    // Clear the "don't show again" setting so welcome popup shows
+    localStorage.removeItem("dontShowAuditWelcome")
+    navigateTo("/")
+  }
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-white border-b shadow-sm">
+    <header className="sticky top-0 z-50 w-full bg-white border-b border-brand-tan shadow-sm">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Image
@@ -40,67 +52,63 @@ export default function NavHeader() {
             width={40}
             height={40}
             className="rounded-full cursor-pointer"
-            onClick={() => navigateTo("/")}
+            onClick={handleBackHome}
           />
-          <span className="font-medium text-[#E26C73] hidden md:inline-block">Make Time For More™</span>
+          <span className="brand-title text-brand-pink hidden md:inline-block">Make Time For More™</span>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-4">
           <Button
             variant="ghost"
-            onClick={() => navigateTo("/")}
-            className={`${pathname === "/" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
+            onClick={handleBackHome}
+            className={`text-black hover:bg-brand-tan ${pathname === "/" ? "bg-brand-tan" : ""}`}
           >
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Retake The Audit
+            <Home className="h-4 w-4 mr-2" />
+            Back Home
           </Button>
 
-          {hasResults && (
-            <Button
-              variant="ghost"
-              onClick={() => navigateTo("/my-results")}
-              className={`${pathname === "/my-results" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
-            >
-              <FileText className="h-4 w-4 mr-2" />
-              Back to Your Results
-            </Button>
-          )}
+          <Button variant="ghost" onClick={handleRetakeAudit} className="text-black hover:bg-brand-tan">
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Retake Audit
+          </Button>
 
-          <Button
-            variant="ghost"
-            onClick={() => navigateTo("/learn-more")}
-            className={`${pathname === "/learn-more" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
-          >
-            <FileText className="h-4 w-4 mr-2" />
-            Learn More
+          <Button variant="ghost" onClick={openApplyNow} className="bg-brand-green text-white hover:bg-green-600">
+            <ExternalLink className="h-4 w-4 mr-2" />
+            APPLY NOW!
           </Button>
 
           <Button
             variant="ghost"
             onClick={() => navigateTo("/about")}
-            className={`${pathname === "/about" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
+            className={`text-black hover:bg-brand-tan ${pathname === "/about" ? "bg-brand-tan" : ""}`}
           >
-            <Info className="h-4 w-4 mr-2" />
             About
           </Button>
 
           <Button
             variant="ghost"
-            onClick={() => navigateTo("/join-us")}
-            className={`${pathname === "/join-us" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
+            onClick={() => navigateTo("/learn-more")}
+            className={`text-black hover:bg-brand-tan ${pathname === "/learn-more" ? "bg-brand-tan" : ""}`}
           >
-            <Calendar className="h-4 w-4 mr-2" />
+            Learn More
+          </Button>
+
+          <Button
+            variant="ghost"
+            onClick={() => navigateTo("/join-us")}
+            className={`text-black hover:bg-brand-tan ${pathname === "/join-us" ? "bg-brand-tan" : ""}`}
+          >
             Join Us
           </Button>
 
           <Button
             variant="ghost"
-            onClick={openApplyNow}
-            className="bg-[#5D9D61] text-white hover:bg-[#4c8050] py-4 border border-white"
+            onClick={() => window.open("https://www.maketimeformore.com", "_blank")}
+            className="text-black hover:bg-brand-tan"
           >
             <ExternalLink className="h-4 w-4 mr-2" />
-            APPLY NOW!
+            Visit Website
           </Button>
         </nav>
 
@@ -112,62 +120,66 @@ export default function NavHeader() {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-b shadow-md">
-          <nav className="flex flex-col p-4 space-y-1">
+        <div className="md:hidden bg-white border-b border-brand-tan shadow-md">
+          <nav className="flex flex-col p-4">
             <Button
               variant="ghost"
-              onClick={() => navigateTo("/")}
-              className={`justify-start ${pathname === "/" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
+              onClick={handleBackHome}
+              className={`justify-start text-black hover:bg-brand-tan ${pathname === "/" ? "bg-brand-tan" : ""} mb-2`}
+            >
+              <Home className="h-4 w-4 mr-2" />
+              Back Home
+            </Button>
+
+            <Button
+              variant="ghost"
+              onClick={handleRetakeAudit}
+              className="justify-start text-black hover:bg-brand-tan mb-2"
             >
               <RefreshCw className="h-4 w-4 mr-2" />
-              Retake The Audit
-            </Button>
-
-            {hasResults && (
-              <Button
-                variant="ghost"
-                onClick={() => navigateTo("/my-results")}
-                className={`justify-start ${pathname === "/my-results" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
-              >
-                <FileText className="h-4 w-4 mr-2" />
-                Back to Your Results
-              </Button>
-            )}
-
-            <Button
-              variant="ghost"
-              onClick={() => navigateTo("/learn-more")}
-              className={`justify-start ${pathname === "/learn-more" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
-            >
-              <FileText className="h-4 w-4 mr-2" />
-              Learn More
-            </Button>
-
-            <Button
-              variant="ghost"
-              onClick={() => navigateTo("/about")}
-              className={`justify-start ${pathname === "/about" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
-            >
-              <Info className="h-4 w-4 mr-2" />
-              About
-            </Button>
-
-            <Button
-              variant="ghost"
-              onClick={() => navigateTo("/join-us")}
-              className={`justify-start ${pathname === "/join-us" ? "bg-gray-100" : ""} bg-[#E26C73] text-white hover:bg-[#d15964] py-4 border border-white`}
-            >
-              <Calendar className="h-4 w-4 mr-2" />
-              Join Us
+              Retake Audit
             </Button>
 
             <Button
               variant="ghost"
               onClick={openApplyNow}
-              className="justify-start bg-[#5D9D61] text-white hover:bg-[#4c8050] py-4 border border-white"
+              className="justify-start bg-brand-green text-white hover:bg-green-600 mb-2"
             >
               <ExternalLink className="h-4 w-4 mr-2" />
               APPLY NOW!
+            </Button>
+
+            <Button
+              variant="ghost"
+              onClick={() => navigateTo("/about")}
+              className={`justify-start text-black hover:bg-brand-tan ${pathname === "/about" ? "bg-brand-tan" : ""} mb-2`}
+            >
+              About
+            </Button>
+
+            <Button
+              variant="ghost"
+              onClick={() => navigateTo("/learn-more")}
+              className={`justify-start text-black hover:bg-brand-tan ${pathname === "/learn-more" ? "bg-brand-tan" : ""} mb-2`}
+            >
+              Learn More
+            </Button>
+
+            <Button
+              variant="ghost"
+              onClick={() => navigateTo("/join-us")}
+              className={`justify-start text-black hover:bg-brand-tan ${pathname === "/join-us" ? "bg-brand-tan" : ""} mb-2`}
+            >
+              Join Us
+            </Button>
+
+            <Button
+              variant="ghost"
+              onClick={() => window.open("https://www.maketimeformore.com", "_blank")}
+              className="justify-start text-black hover:bg-brand-tan mb-2"
+            >
+              <ExternalLink className="h-4 w-4 mr-2" />
+              Visit Website
             </Button>
           </nav>
         </div>

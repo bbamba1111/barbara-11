@@ -103,7 +103,7 @@ export function generateHtml(
     </head>
     <body>
       <div class="header">
-        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1logo-RbNY0m7pBEQwRKBmw3gineFaZ4qEij.png" alt="Make Time For More Logo" class="logo">
+        <img src="https://make-time-for-more.vercel.app/images/logo.png" alt="Make Time For More Logo" class="logo">
         <h1>Work-Life Balance Audit Results</h1>
         <p>Prepared for: ${name} (${email})</p>
       </div>

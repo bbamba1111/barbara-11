@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion" // Import motion from framer-motion
+import { motion } from "framer-motion"
 
 interface CherryBlossomConfettiProps {
   duration?: number
@@ -21,7 +21,10 @@ export default function CherryBlossomConfetti({
 
   useEffect(() => {
     // Determine number of petals based on density
-    const petalCount = density === "low" ? 15 : density === "medium" ? 25 : 40
+    // Reduce count on mobile to improve performance
+    const isMobile = window.innerWidth < 768
+    const basePetalCount = density === "low" ? 10 : density === "medium" ? 20 : 30
+    const petalCount = isMobile ? Math.floor(basePetalCount * 0.6) : basePetalCount
 
     // Generate random petals
     const newPetals = Array.from({ length: petalCount }, (_, i) => ({
@@ -30,7 +33,7 @@ export default function CherryBlossomConfetti({
       delay: Math.random() * (speed === "fast" ? 0.5 : speed === "normal" ? 1 : 1.5), // Random delay for animation start
       rotation: Math.random() * 360, // Random rotation
       size: 10 + Math.random() * 10, // Random size between 10-20px
-      type: Math.floor(Math.random() * 3), // 3 different petal types for variety (removed circles)
+      type: Math.floor(Math.random() * 3), // 3 different petal types for variety
     }))
 
     setPetals(newPetals)
@@ -58,7 +61,7 @@ export default function CherryBlossomConfetti({
   if (!isActive) return null
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-10">
       {petals.map((petal) => (
         <motion.div
           key={petal.id}

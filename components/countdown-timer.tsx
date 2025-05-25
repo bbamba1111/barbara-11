@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import CherryBlossomConfetti from "./cherry-blossom-confetti"
 
 interface CountdownTimerProps {
   className?: string
@@ -14,7 +13,10 @@ const CountdownTimer = ({ className = "" }: CountdownTimerProps) => {
     minutes: 0,
     seconds: 0,
   })
+  const [targetWeekMessage, setTargetWeekMessage] = useState<string>("")
   const [currentMonth, setCurrentMonth] = useState<string>("")
+  const [weekLabel, setWeekLabel] = useState<string>("")
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const calculateTimeToNextCycleSunday = () => {
@@ -33,9 +35,29 @@ const CountdownTimer = ({ className = "" }: CountdownTimerProps) => {
       const seconds = Math.floor((diff % (1000 * 60)) / 1000)
 
       // Set which Sunday we're counting down to
+      const sundayNumber = getSundayNumberInMonth(nextTargetSunday)
       const monthName = nextTargetSunday.toLocaleString("default", { month: "long" })
       setCurrentMonth(monthName)
 
+      // Set the appropriate message and label based on which week we're counting down to
+      if (sundayNumber === 1) {
+        setWeekLabel("The 1st Week")
+        setTargetWeekMessage(
+          "The 7-Day Work-Life Balance Reset Experience where You Reset Your Rhythms and Reclaim Your Time In One Powerful Week This Month!",
+        )
+      } else if (sundayNumber === 2) {
+        setWeekLabel("The 2nd Week")
+        setTargetWeekMessage(
+          "Our 14-Day Momentum Building Week -- Perfect if you're ready to start building real momentum toward your desired work-lifestyle!",
+        )
+      } else if (sundayNumber === 3) {
+        setWeekLabel("The 3rd Week")
+        setTargetWeekMessage(
+          "Our 21-Day Habit Building week followed by our 1-Week Recovery Break -- Perfect if you are truly ready to disrupt hustle culture, and reset your work-life balance habits for sustainable success.",
+        )
+      }
+
+      setIsLoading(false)
       return { days, hours, minutes, seconds }
     }
 
@@ -124,31 +146,53 @@ const CountdownTimer = ({ className = "" }: CountdownTimerProps) => {
     return () => clearInterval(timer)
   }, [])
 
-  return (
-    <div className="space-y-3 relative">
-      <CherryBlossomConfetti duration={8} speed="fast" density="medium" />
-      <p className="text-center font-bold text-2xl">
-        Counting Down to Our 28-Day Work-Life Balance Cycle In {currentMonth}!
-      </p>
+  if (isLoading) {
+    return (
+      <div className="space-y-3 animate-pulse">
+        <div className="h-6 bg-gray-200 rounded w-3/4 mx-auto"></div>
+        <div className="flex justify-center space-x-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="text-center">
+              <div className="h-10 w-10 bg-gray-200 rounded mx-auto mb-1"></div>
+              <div className="h-4 bg-gray-200 rounded w-12"></div>
+            </div>
+          ))}
+        </div>
+        <div className="h-16 bg-gray-200 rounded w-full mx-auto"></div>
+      </div>
+    )
+  }
 
+  return (
+    <div className="space-y-3 w-full">
+      <p
+        className={`text-center font-bold text-xl break-words ${className?.includes("text-white") ? "text-white" : ""}`}
+      >
+        Counting Down to {weekLabel} of Work-Life Balance in {currentMonth}
+      </p>
       <div className={`flex justify-center space-x-6 ${className}`}>
         <div className="text-center">
-          <div className="text-4xl font-bold">{timeLeft.days}</div>
+          <div className="text-4xl font-bold">{String(timeLeft.days).padStart(2, "0")}</div>
           <div className="text-sm uppercase font-medium">Days</div>
         </div>
         <div className="text-center">
-          <div className="text-4xl font-bold">{timeLeft.hours}</div>
+          <div className="text-4xl font-bold">{String(timeLeft.hours).padStart(2, "0")}</div>
           <div className="text-sm uppercase font-medium">Hours</div>
         </div>
         <div className="text-center">
-          <div className="text-4xl font-bold">{timeLeft.minutes}</div>
+          <div className="text-4xl font-bold">{String(timeLeft.minutes).padStart(2, "0")}</div>
           <div className="text-sm uppercase font-medium">Mins</div>
         </div>
         <div className="text-center">
-          <div className="text-4xl font-bold">{timeLeft.seconds}</div>
+          <div className="text-4xl font-bold">{String(timeLeft.seconds).padStart(2, "0")}</div>
           <div className="text-sm uppercase font-medium">Secs</div>
         </div>
       </div>
+      <p
+        className={`text-md text-center mt-2 max-w-2xl mx-auto px-4 break-words ${className?.includes("text-white") ? "text-white" : ""}`}
+      >
+        {targetWeekMessage}
+      </p>
     </div>
   )
 }

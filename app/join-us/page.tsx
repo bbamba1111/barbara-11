@@ -2,169 +2,261 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, RefreshCw } from "lucide-react"
 import CherryBlossomConfetti from "@/components/cherry-blossom-confetti"
-import LargeCountdownTimer from "@/components/large-countdown-timer"
+import { ExternalLink } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export default function JoinUsPage() {
-  const [showConfetti, setShowConfetti] = useState(true)
+  const router = useRouter()
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  })
+
+  // Set your target date here (June 1, 2025 or whatever your actual target date is)
+  const targetDate = new Date("June 1, 2025 00:00:00").getTime()
 
   useEffect(() => {
-    // Hide confetti after 8 seconds
-    const timer = setTimeout(() => {
-      setShowConfetti(false)
-    }, 8000)
+    const interval = setInterval(() => {
+      const now = new Date().getTime()
+      const distance = targetDate - now
 
-    return () => clearTimeout(timer)
-  }, [])
+      if (distance < 0) {
+        clearInterval(interval)
+        return
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24))
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000)
+
+      setTimeLeft({ days, hours, minutes, seconds })
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [targetDate])
 
   return (
-    <>
-      {/* Full Menu Header */}
-      <header className="bg-white py-4 px-6 flex items-center justify-between border-b">
-        <div className="flex items-center">
-          <Image src="/images/logo.png" alt="Make Time For More™" width={40} height={40} className="rounded-full" />
-          <span className="ml-2 font-medium text-[#E26C73]">Make Time For More™</span>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Link href="/">
-            <Button variant="ghost" size="sm" className="bg-[#E26C73] hover:bg-[#d15964] text-white">
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Retake The Audit
+    <div className="min-h-screen flex flex-col relative">
+      {/* Cherry Blossom Confetti */}
+      <CherryBlossomConfetti duration={30} speed="fast" />
+
+      {/* Top Navigation */}
+      <div className="w-full max-w-4xl mx-auto px-4 pt-8 mb-6">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => router.push("/")} className="">
+              Retake Audit
             </Button>
-          </Link>
-          <Link href="/learn-more">
-            <Button variant="ghost" size="sm" className="bg-[#E26C73] hover:bg-[#d15964] text-white">
+            <Button variant="outline" onClick={() => router.push("/my-results")} className="">
+              Back to Results
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/about")} className="">
+              About
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/learn-more")} className="">
               Learn More
             </Button>
-          </Link>
-          <Link href="/join-us">
-            <Button variant="ghost" size="sm" className="bg-gray-100 text-black">
+            <Button variant="outline" onClick={() => router.push("/join-us")} className="bg-brand-tan">
               Join Us
             </Button>
-          </Link>
-          <Link
-            href="https://docs.google.com/forms/d/e/1FAIpQLSeYa2yNmiIOXykp3Kd5Xts0jDPe96NJ4adWhFYEwi5GXZ3Ilw/viewform?usp=header"
-            target="_blank"
-          >
-            <Button className="bg-[#5D9D61] hover:bg-[#4c8050] text-white" size="sm">
+          </div>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => window.open("https://www.maketimeformore.com", "_blank")}
+              className=""
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              Visit Website
+            </Button>
+            <Button
+              onClick={() =>
+                window.open(
+                  "https://docs.google.com/forms/d/e/1FAIpQLSeYa2yNmiIOXykp3Kd5Xts0jDPe96NJ4adWhFYEwi5GXZ3Ilw/viewform?usp=header",
+                  "_blank",
+                )
+              }
+              className="bg-brand-green text-white hover:bg-green-600"
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
               APPLY NOW!
             </Button>
-          </Link>
-          <Link href="https://www.maketimeformore.com" target="_blank">
-            <Button className="bg-[#E26C73] hover:bg-[#d15964] text-white" size="sm">
-              Visit Our Website
-            </Button>
-          </Link>
-        </div>
-      </header>
-
-      <main className="min-h-screen flex flex-col items-center p-4 md:p-8 bg-gradient-to-b from-white to-rose-50 relative">
-        {showConfetti && <CherryBlossomConfetti duration={8} speed="fast" density="medium" />}
-
-        <div className="max-w-4xl w-full text-center space-y-8">
-          <div className="text-center mb-6">
-            <Link href="/" className="text-[#E26C73] hover:underline">
-              ← Back to Home
-            </Link>
           </div>
+        </div>
+      </div>
 
+      <main className="flex-1 container mx-auto px-4 py-8 max-w-4xl">
+        <div className="text-center mb-8">
           <div className="flex justify-center mb-6">
             <Image
               src="/images/logo.png"
               alt="Make Time For More Logo"
-              width={120}
-              height={120}
-              className="rounded-full shadow-lg"
+              width={130}
+              height={130}
+              className="rounded-full"
             />
           </div>
 
-          <h1
-            className="text-2xl md:text-3xl font-medium text-[#5D9D61] mb-6 leading-tight"
-            style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 500 }}
-          >
+          <h1 className="text-3xl brand-title text-brand-pink mb-6">Make Time For More™</h1>
+
+          <h2 className="text-2xl font-medium text-brand-green mb-6">
             Join Us for a 7-Day Reset, our 14-Day Momentum Builder or the 21-Day Habit Building Cycle + 1 Week Recovery
-            Break For The Complete 28-Day Work-Life Balance Experience!
-          </h1>
+            Break For The Complete Transformational Work-Life Balance Experience!
+          </h2>
+        </div>
 
-          {/* Tea celebration image above countdown - increased by 50% */}
-          <div className="flex justify-center mb-6">
+        {/* Hero Image with Cherry Blossoms */}
+        <div className="mb-8 flex justify-center">
+          <div className="relative">
             <Image
-              src="/images/tea-celebration.png"
-              alt="Women celebrating with tea under cherry blossoms"
+              src="/images/women-tea-cherry-blossoms.png"
+              alt="Women enjoying tea under cherry blossoms"
               width={600}
-              height={375}
-              className="rounded-lg shadow-md"
+              height={400}
+              className="rounded-lg shadow-lg"
             />
           </div>
+        </div>
 
-          {/* Countdown Timer Section */}
-          <div className="bg-gradient-to-r from-[#E26C73] to-[#5D9D61] p-6 rounded-lg text-white mb-8">
-            <LargeCountdownTimer className="text-white" />
+        <div className="text-center mb-8">
+          {/* Countdown Timer */}
+          <div className="bg-gradient-to-r from-[#E26C73] to-[#5D9D61] text-white rounded-lg p-6 mb-8">
+            <h2 className="text-2xl header-bold mb-4 text-center text-white">
+              Counting Down to Our 28-Day Work-Life Balance Cycle In June!
+            </h2>
+
+            <div className="flex justify-center space-x-4 mb-4">
+              <div className="text-center">
+                <div className="text-4xl font-bold text-white">{timeLeft.days}</div>
+                <div className="text-sm text-white">DAYS</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-white">{timeLeft.hours}</div>
+                <div className="text-sm text-white">HOURS</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-white">{timeLeft.minutes}</div>
+                <div className="text-sm text-white">MINS</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-white">{timeLeft.seconds}</div>
+                <div className="text-sm text-white">SECS</div>
+              </div>
+            </div>
+
+            <p className="italic text-center text-white">
+              Reset Your Rhythms & Reclaim Your Time As You Make Time For More.
+            </p>
           </div>
 
-          <div className="text-center mb-6">
-            <p className="text-lg font-medium text-black">
+          <div className="text-center mb-8">
+            <h3 className="text-lg header-bold mb-4 text-black">
               Sunday Kick-Off Begins 1:PM ET | Monday - Thursday Co-Working Begins 9:AM ET
-            </p>
+            </h3>
           </div>
 
-          <div className="bg-rose-50 border border-[#E26C73] p-6 max-w-2xl mx-auto">
-            <h3 className="font-medium text-[#E26C73] mb-3">Important Enrollment Deadline</h3>
-            <p className="mb-3">
-              You must complete the enrollment process by <span className="font-bold">Thursday 7:00 PM EST</span> to
-              attend the Sunday Kick-Off Celebration and begin co-working on Monday.
-            </p>
-            <p className="text-sm font-medium">Sunday Kick-Off: 1:00 PM EST | Monday Co-Working: 9:00 AM EST</p>
-          </div>
-
-          <div className="bg-amber-50 border border-amber-300 p-6 max-w-2xl mx-auto">
-            <h3 className="font-medium text-amber-700 mb-3">Special BETA Opportunity</h3>
-            <p className="mb-3">
-              You're invited to join our exclusive BETA program at special BETA investment pricing!
-            </p>
-            <p className="text-sm">
-              This special BETA pricing is available for a limited time only. Once our BETA period concludes, the
-              investment will increase to reflect the premium value of this boutique experience.
+          <div className="border border-brand-pink bg-red-50 rounded-lg p-6 text-center">
+            <h3 className="text-xl text-brand-pink header-bold mb-4">Important Enrollment Deadline</h3>
+            <p className="text-black">
+              You must complete the enrollment process by Thursday, 10:00 PM EST to attend the Sunday Kick-Off and start
+              with the group.
             </p>
           </div>
+        </div>
 
-          <div className="space-y-2 max-w-lg mx-auto">
-            <Link
-              href="https://docs.google.com/forms/d/e/1FAIpQLSeYa2yNmiIOXykp3Kd5Xts0jDPe96NJ4adWhFYEwi5GXZ3Ilw/viewform?usp=header"
-              target="_blank"
-            >
-              <Button className="w-full bg-[#5D9D61] hover:bg-[#4c8050] text-white py-4 text-xl font-bold border-2 border-white">
-                <ExternalLink className="mr-2 h-4 w-4" />
-                APPLY NOW!
-              </Button>
-            </Link>
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="bg-white rounded-lg shadow-md p-6 border border-brand-tan">
+            <h3 className="text-xl header-bold text-brand-pink mb-4">What You'll Experience</h3>
+            <ul className="list-disc pl-5 space-y-2 text-black">
+              <li>Daily co-working sessions with accountability</li>
+              <li>Weekly planning and reflection workshops</li>
+              <li>Access to our private community</li>
+              <li>Personalized work-life balance strategies</li>
+              <li>Tools to reclaim your time and energy</li>
+            </ul>
+          </div>
 
-            <Link href="/learn-more">
-              <Button className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white py-4 border-2 border-white">
-                Learn More
-              </Button>
-            </Link>
+          <div className="bg-white rounded-lg shadow-md p-6 border border-brand-tan">
+            <h3 className="text-xl header-bold text-brand-green mb-4">Who This Is For</h3>
+            <ul className="list-disc pl-5 space-y-2 text-black">
+              <li>Women entrepreneurs feeling overwhelmed</li>
+              <li>Business owners seeking better work-life balance</li>
+              <li>Professionals wanting to reclaim their time</li>
+              <li>Anyone ready to transform their relationship with time</li>
+              <li>Those committed to sustainable success</li>
+            </ul>
+          </div>
+        </div>
 
-            <Link href="/about">
-              <Button className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white py-4 border-2 border-white">
-                About
-              </Button>
-            </Link>
+        <div className="text-center">
+          <Button
+            onClick={() =>
+              window.open(
+                "https://docs.google.com/forms/d/e/1FAIpQLSeYa2yNmiIOXykp3Kd5Xts0jDPe96NJ4adWhFYEwi5GXZ3Ilw/viewform?usp=header",
+                "_blank",
+              )
+            }
+            className="bg-brand-green hover:bg-green-600 text-white px-8 py-6 text-xl header-bold"
+          >
+            Apply Now To Join Us
+          </Button>
+          <p className="mt-4 text-black">Limited spots available. Application required to ensure a good fit.</p>
+        </div>
+      </main>
 
-            <Button className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white py-4 border-2 border-white">
+      {/* Bottom Navigation */}
+      <div className="w-full max-w-4xl mx-auto px-4 pb-8 mb-6">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => router.push("/")} className="">
+              Retake Audit
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/my-results")} className="">
+              Back to Results
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/about")} className="">
+              About
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/learn-more")} className="">
+              Learn More
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/join-us")} className="bg-brand-tan">
               Join Us
             </Button>
           </div>
-
-          <p className="text-sm text-gray-600 mt-8">
-            "You didn't leave your high-stress role just to rebuild burnout inside your business."
-            <br />- Thought Leader Barbara
-          </p>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => window.open("https://www.maketimeformore.com", "_blank")}
+              className=""
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              Visit Website
+            </Button>
+            <Button
+              onClick={() =>
+                window.open(
+                  "https://docs.google.com/forms/d/e/1FAIpQLSeYa2yNmiIOXykp3Kd5Xts0jDPe96NJ4adWhFYEwi5GXZ3Ilw/viewform?usp=header",
+                  "_blank",
+                )
+              }
+              className="bg-brand-green text-white hover:bg-green-600"
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              APPLY NOW!
+            </Button>
+          </div>
         </div>
-      </main>
-    </>
+      </div>
+
+      <footer className="bg-brand-tan py-6 text-center text-black">
+        <p>© 2025 Make Time For More™. All rights reserved.</p>
+      </footer>
+    </div>
   )
 }

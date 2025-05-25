@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import { ExternalLink, Clock, X, ArrowLeft, ArrowRight, FileText, Flower } from "lucide-react"
+import { ExternalLink, Clock, X, ArrowLeft, ArrowRight, FileText, Flower, Globe } from 'lucide-react'
 import { useRouter } from "next/navigation"
 import CherryBlossomConfetti from "./cherry-blossom-confetti"
 import CountdownTimer from "./countdown-timer"
@@ -24,7 +24,7 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
       setShowConfetti(false)
     }, 8000)
 
-    // Set up blinking effect
+    // Set up blinking effect for the apply button
     const blinkInterval = setInterval(() => {
       setIsBlinking((prev) => !prev)
     }, 800)
@@ -35,46 +35,51 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
     }
   }, [])
 
+  const goToWebsite = () => {
+    window.open("https://www.maketimeformore.com", "_blank")
+  }
+
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto relative">
         {/* Add explicit close button at the top right */}
         <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>
         </DialogClose>
 
-        {showConfetti && <CherryBlossomConfetti duration={8} speed="fast" density="low" />}
+        {/* Add cherry blossom confetti animation */}
+        {showConfetti && <CherryBlossomConfetti duration={8} speed="fast" density="medium" />}
 
         <DialogHeader>
           <div className="flex justify-center mb-4 relative">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1akick-P2UP8ICvs4G1iTkVYmy5CEDFsMtTIB.png"
-              alt="Women enjoying tea under cherry blossoms"
+              src="https://make-time-for-more.vercel.app/images/logo.png"
+              alt="Make Time For More Logo"
               width={300}
               height={200}
-              className="rounded-lg"
+              className="rounded-lg shadow-md"
             />
           </div>
 
           <DialogTitle className="text-xl text-center text-[#E26C73]">
-            Join Us for The Next Sunday Kick-Off Celebration!
+            Join Us For Our Next Sunday Kick-Off Celebration!
           </DialogTitle>
         </DialogHeader>
 
-        {/* Countdown Timer - Pink and Green */}
+        {/* Countdown Timer - Pink and Green Gradient Background */}
         <div className="mb-4">
-          <div className="bg-gradient-to-r from-[#E26C73] to-[#5D9D61] p-4 rounded-lg text-white">
+          <div className="bg-gradient-to-r from-[#E26C73] to-[#5D9D61] p-4 rounded-lg text-white shadow-md">
             <CountdownTimer className="text-white" />
           </div>
         </div>
 
         <div className="space-y-6 py-4">
-          <p className="text-center">
-            Plug yourself into your new work-life balance rhythm starting Monday @ 9:00 AM EST!
+          <p className="text-center font-medium">
+            <span className="font-medium">May 20, 2024 @ 9:00 AM EST</span>
           </p>
 
-          <div className="bg-rose-50 border border-[#E26C73] rounded-md p-4">
+          <div className="bg-rose-50 border border-[#E26C73] rounded-md p-4 shadow-sm">
             <h3 className="font-medium text-[#E26C73] mb-2">Important Enrollment Deadline</h3>
             <p className="mb-2">
               You must complete the enrollment process by <span className="font-bold">Thursday 7:00 PM EST</span> to
@@ -86,7 +91,7 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
             </div>
           </div>
 
-          <div className="bg-amber-50 border border-amber-300 rounded-md p-4">
+          <div className="bg-[#f5f0e6] border border-amber-300 rounded-md p-4 shadow-sm">
             <h3 className="font-medium text-amber-700 mb-2">Special BETA Opportunity</h3>
             <p className="mb-3">
               You're invited to join our exclusive BETA program at special BETA investment pricing!
@@ -105,7 +110,7 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
             </p>
           </div>
 
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-3">
             <Button
               onClick={() =>
                 window.open(
@@ -113,7 +118,7 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
                   "_blank",
                 )
               }
-              className={`${isBlinking ? "bg-[#5D9D61] animate-pulse" : "bg-[#5D9D61]"} hover:bg-[#4c8050] text-white relative py-4 font-bold w-full border-2 border-white`}
+              className={`${isBlinking ? "bg-[#5D9D61] animate-pulse" : "bg-[#4c8050]"} text-white relative py-6 font-bold`}
             >
               <div className="absolute -left-2 top-1/2 transform -translate-y-1/2">
                 <ArrowRight className="h-5 w-5 animate-bounce" />
@@ -130,7 +135,7 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
                 onClose()
                 router.push("/learn-more")
               }}
-              className="bg-[#E26C73] hover:bg-[#d15964] text-white w-full py-4 border-2 border-white"
+              className="bg-[#E26C73] hover:bg-[#d15964] text-white"
             >
               <ExternalLink className="mr-2 h-4 w-4" />
               Learn More
@@ -141,15 +146,20 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
                 onClose()
                 router.push("/join-us")
               }}
-              className="bg-[#E26C73] hover:bg-[#d15964] text-white w-full py-4 border-2 border-white"
+              className="bg-[#E26C73] hover:bg-[#d15964] text-white"
             >
               <ExternalLink className="mr-2 h-4 w-4" />
               Join Us
             </Button>
 
+            <Button onClick={goToWebsite} className="bg-[#5D9D61] hover:bg-[#4c8050] text-white">
+              <Globe className="mr-2 h-4 w-4" />
+              Visit Our Website
+            </Button>
+
             <ButtonLink
               href="https://chatgpt.com/g/g-67f5422677308191aa28a86d8ae5084e-free-work-life-balance-audit-for-women-founders"
-              className="bg-[#E26C73] hover:bg-[#d15964] text-white flex items-center justify-center w-full py-4 border-2 border-white"
+              className="bg-[#E26C73] hover:bg-[#d15964] text-white flex items-center justify-center"
             >
               <ExternalLink className="mr-2 h-4 w-4" />
               Chat with Cherry Blossom
@@ -161,17 +171,13 @@ export default function FollowUpPopup({ onClose }: FollowUpPopupProps) {
                 onClose()
                 router.push("/my-results")
               }}
-              className="bg-[#E26C73] hover:bg-[#d15964] text-white w-full py-4 border-2 border-white"
+              className="bg-white border border-[#E26C73] text-[#E26C73] hover:bg-rose-50"
             >
               <FileText className="mr-2 h-4 w-4" />
               Back to Results
             </Button>
 
-            <Button
-              onClick={onClose}
-              variant="outline"
-              className="mt-2 w-full bg-[#E26C73] hover:bg-[#d15964] text-white py-4 border-2 border-white"
-            >
+            <Button onClick={onClose} variant="outline" className="mt-2">
               Close
             </Button>
           </div>
