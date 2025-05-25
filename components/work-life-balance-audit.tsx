@@ -73,7 +73,7 @@ const questions: Question[] = [
     id: "q1",
     number: 1,
     title: "Spiritual",
-    text: "In the past 30 days, how often have you connected to your spiritual life through prayer, meditation, or nature?",
+    text: "In the past 30 days, how often have you connected to your spiritual life through prayer, study, fellowship, praise, musice, meditation, or nature?",
     category: "spiritual",
   },
   {
@@ -94,7 +94,7 @@ const questions: Question[] = [
     id: "q4",
     number: 4,
     title: "Physical Nourishment",
-    text: "In the past 30 days, how often have you nourished your body with hydration and healthy meals?",
+    text: "In the past 30 days, how often have you nourished your body with adequate hydration and healthy meals?",
     category: "physicalNourishment",
   },
   {
@@ -115,35 +115,35 @@ const questions: Question[] = [
     id: "q7",
     number: 7,
     title: "Personal",
-    text: "In the past 30 days, how often have you made time for self-care and personal growth?",
+    text: "In the past 30 days, how often have you made time for self-care and personal growth activities?",
     category: "personal",
   },
   {
     id: "q8",
     number: 8,
     title: "Intellectual",
-    text: "In the past 30 days, how often have you engaged in learning or skill-building activities?",
+    text: "In the past 30 days, how often have you engaged in learning something new or a skill-building activity?",
     category: "intellectual",
   },
   {
     id: "q9",
     number: 9,
     title: "Professional Visibility",
-    text: "In the past 30 days, how often have you shared your expertise or expanded your professional visibility?",
+    text: "In the past 30 days, how often have you shared your expertise through partnerships, collaboration, public speaking or publishing and/or expanded your professional visibility through media, podcast interviews or publicity?",
     category: "professional",
   },
   {
     id: "q10",
     number: 10,
     title: "Financial",
-    text: "In the past 30 days, how often have you focused intentionally on income generation and financial planning?",
+    text: "In the past 30 days, how often have you focused intentionally on income generation, financial planning, retirement planning, business valuation and/or exit planning?",
     category: "financial",
   },
   {
     id: "q11",
     number: 11,
     title: "Environmental",
-    text: "In the past 30 days, how often have you made effort to create beauty, balance, or order in your environment?",
+    text: "In the past 30 days, how often have you made effort to create beauty, balance, or order in your home or office environment?",
     category: "environmental",
   },
   {
@@ -157,21 +157,21 @@ const questions: Question[] = [
     id: "q13",
     number: 13,
     title: "Social",
-    text: "In the past 30 days, how often have you engaged with supportive, like-minded communities?",
+    text: "In the past 30 days, how often have you engaged with your friends or supportive, like-minded individuals?",
     category: "social",
   },
   {
     id: "q14",
     number: 14,
     title: "Recreational",
-    text: "In the past 30 days, how often have you created space for joy, creativity, or play?",
+    text: "In the past 30 days, how often have you created space for joy, creativity, vacation, travel or play?",
     category: "recreational",
   },
   {
     id: "q15",
     number: 15,
     title: "Charitable",
-    text: "In the past 30 days, how often have you contributed to supporting or inspiring others?",
+    text: "In the past 30 days, how often have you contributed to supporting or inspiring others through donating, charity, volunteering or other philanthropic endeavors?",
     category: "charitable",
   },
 ]
@@ -352,7 +352,7 @@ export default function WorkLifeBalanceAudit({ onClose, onComplete }: WorkLifeBa
   const [isCopied, setIsCopied] = useState(false)
   const [isCherryPromptCopied, setIsCherryPromptCopied] = useState(false)
   const [personalizedFeedback, setPersonalizedFeedback] = useState<{ category: Category; feedback: string }[]>([])
-  const [showConfetti, setShowConfetti] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(true)
   const cherryBlossomPromptRef = useRef<HTMLTextAreaElement>(null)
   const router = useRouter()
 
@@ -379,7 +379,7 @@ export default function WorkLifeBalanceAudit({ onClose, onComplete }: WorkLifeBa
     if (isResultsPage && overallScore >= 70) {
       setShowConfetti(true)
 
-      // Hide confetti after 8 seconds
+      // Hide confetti after 10 seconds
       const timer = setTimeout(() => {
         setShowConfetti(false)
       }, 8000)

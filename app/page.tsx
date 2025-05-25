@@ -49,7 +49,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-24 bg-gradient-to-b from-white to-brand-tan">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-12 bg-gradient-to-b from-white to-brand-tan">
       {showWelcome && (
         <div className="fixed inset-0 z-50 overflow-auto bg-black/50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-[600px] min-h-[700px] relative m-4 w-full p-8">
