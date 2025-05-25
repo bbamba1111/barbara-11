@@ -3,9 +3,8 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
-import { ExternalLink, ArrowLeft, FileText, Flower, Globe } from 'lucide-react'
+import { ExternalLink } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { ButtonLink } from "@/components/ui/button-link"
 
 export default function LearnMorePage() {
   const router = useRouter()
@@ -13,42 +12,66 @@ export default function LearnMorePage() {
     router.push("/join-us")
   }
 
-  const goToWebsite = () => {
-    window.open("https://www.maketimeformore.com", "_blank")
-  }
-
   return (
     <main className="flex min-h-screen flex-col items-center p-4 md:p-8 bg-gradient-to-b from-white to-rose-50">
-      <div className="max-w-3xl w-full space-y-6 mb-16">
-        <div className="flex flex-col sm:flex-row gap-2 mb-4">
-          <Button variant="outline" onClick={() => router.push("/")} className="flex-1">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Home
-          </Button>
-
-          <Button variant="outline" onClick={() => router.push("/my-results")} className="flex-1">
-            <FileText className="mr-2 h-4 w-4" />
-            Back to Results
-          </Button>
-
-          <Button variant="outline" onClick={goToWebsite} className="flex-1 bg-[#5D9D61] text-white hover:bg-[#4c8050]">
-            <Globe className="mr-2 h-4 w-4" />
-            Visit Website
-          </Button>
+      {/* Top Navigation */}
+      <div className="w-full max-w-3xl mb-6">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => router.push("/")} className="">
+              Retake Audit
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/my-results")} className="">
+              Back to Results
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/about")} className="">
+              About
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/learn-more")} className="bg-brand-tan">
+              Learn More
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/join-us")} className="">
+              Join Us
+            </Button>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => window.open("https://www.maketimeformore.com", "_blank")}
+              className=""
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              Visit Website
+            </Button>
+            <Button
+              onClick={() =>
+                window.open(
+                  "https://docs.google.com/forms/d/e/1FAIpQLSeYa2yNmiIOXykp3Kd5Xts0jDPe96NJ4adWhFYEwi5GXZ3Ilw/viewform?usp=header",
+                  "_blank",
+                )
+              }
+              className="bg-brand-green text-white hover:bg-green-600"
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              APPLY NOW!
+            </Button>
+          </div>
         </div>
+      </div>
 
+      <div className="max-w-3xl w-full space-y-6 mb-16">
         <div className="text-center">
-          <div className="w-24 h-24 mx-auto mb-4 relative">
+          <div className="mb-8 flex justify-center">
             <Image
               src="/images/logo.png"
               alt="Make Time For More Logo"
-              width={120}
-              height={120}
+              width={130}
+              height={130}
               className="rounded-full shadow-lg"
             />
           </div>
-          <h3 className="text-2xl font-bold text-[#E26C73] mb-2">Make Time For More™</h3>
-          <h4 className="text-xl font-semibold text-black mb-2">The Spiritual Foundation of Work-Life Balance</h4>
+          <h1 className="text-3xl brand-title mb-2 text-brand-pink">Make Time For More™</h1>
+          <h2 className="text-2xl brand-subtitle mb-2 text-black">The Spiritual Foundation of Work-Life Balance</h2>
         </div>
 
         <div className="text-center mb-6"></div>
@@ -100,11 +123,6 @@ export default function LearnMorePage() {
         {/* First Join Us button */}
         <Button onClick={goToJoinUs} className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white py-6 text-lg">
           Join Us
-        </Button>
-
-        <Button onClick={goToWebsite} className="w-full bg-[#5D9D61] hover:bg-[#4c8050] text-white py-3">
-          <Globe className="mr-2 h-4 w-4" />
-          Visit Our Website
         </Button>
 
         <Card>
@@ -182,11 +200,6 @@ export default function LearnMorePage() {
         {/* Second Join Us button */}
         <Button onClick={goToJoinUs} className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white py-6 text-lg">
           Join Us
-        </Button>
-
-        <Button onClick={goToWebsite} className="w-full bg-[#5D9D61] hover:bg-[#4c8050] text-white py-3">
-          <Globe className="mr-2 h-4 w-4" />
-          Visit Our Website
         </Button>
 
         <Card>
@@ -283,34 +296,57 @@ export default function LearnMorePage() {
             <ExternalLink className="mr-2 h-5 w-5" />
             APPLY NOW!
           </Button>
-
-          <ButtonLink
-            href="https://chatgpt.com/g/g-67f5422677308191aa28a86d8ae5084e-free-work-life-balance-audit-for-women-founders"
-            className="w-full bg-[#E26C73] hover:bg-[#d15964] text-white flex items-center justify-center py-3"
-          >
-            <ExternalLink className="mr-2 h-4 w-4" />
-            Chat with Cherry Blossom
-            <Flower className="ml-2 h-4 w-4 text-pink-300 font-extrabold" />
-          </ButtonLink>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-2 mt-4">
-          <Button variant="outline" onClick={() => router.push("/")} className="flex-1">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Home
-          </Button>
-
-          <Button variant="outline" onClick={() => router.push("/my-results")} className="flex-1">
-            <FileText className="mr-2 h-4 w-4" />
-            Back to Results
-          </Button>
-
-          <Button variant="outline" onClick={goToWebsite} className="flex-1 bg-[#5D9D61] text-white hover:bg-[#4c8050]">
-            <Globe className="mr-2 h-4 w-4" />
-            Visit Website
-          </Button>
         </div>
       </div>
+
+      {/* Bottom Navigation */}
+      <div className="w-full max-w-3xl mb-6">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => router.push("/")} className="">
+              Retake Audit
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/my-results")} className="">
+              Back to Results
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/about")} className="">
+              About
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/learn-more")} className="bg-brand-tan">
+              Learn More
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/join-us")} className="">
+              Join Us
+            </Button>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => window.open("https://www.maketimeformore.com", "_blank")}
+              className=""
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              Visit Website
+            </Button>
+            <Button
+              onClick={() =>
+                window.open(
+                  "https://docs.google.com/forms/d/e/1FAIpQLSeYa2yNmiIOXykp3Kd5Xts0jDPe96NJ4adWhFYEwi5GXZ3Ilw/viewform?usp=header",
+                  "_blank",
+                )
+              }
+              className="bg-brand-green text-white hover:bg-green-600"
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              APPLY NOW!
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <footer className="bg-brand-tan py-6 text-center text-black">
+        <p>© 2025 Make Time For More™. All rights reserved.</p>
+      </footer>
     </main>
   )
 }

@@ -1,40 +1,82 @@
+"use client"
+
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { ArrowLeft, Check, Gift, Sparkles } from 'lucide-react'
+import { Check, ExternalLink } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export default function AboutPage() {
+  const router = useRouter()
+
   return (
     <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gradient-to-b from-white to-rose-50">
-      <div className="max-w-3xl w-full">
-        <Link href="/" className="inline-flex items-center text-[#E26C73] hover:text-[#d15964] mb-6">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Home
-        </Link>
+      {/* Top Navigation */}
+      <div className="w-full max-w-3xl mb-6">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => router.push("/")} className="">
+              Retake Audit
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/my-results")} className="">
+              Back to Results
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/about")} className="bg-brand-tan">
+              About
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/learn-more")} className="">
+              Learn More
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/join-us")} className="">
+              Join Us
+            </Button>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              onClick={() =>
+                window.open(
+                  "https://docs.google.com/forms/d/e/1FAIpQLSeYa2yNmiIOXykp3Kd5Xts0jDPe96NJ4adWhFYEwi5GXZ3Ilw/viewform?usp=header",
+                  "_blank",
+                )
+              }
+              className="bg-brand-green text-white hover:bg-green-600"
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              APPLY NOW!
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => window.open("https://www.maketimeformore.com", "_blank")}
+              className=""
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              Visit Website
+            </Button>
+          </div>
+        </div>
+      </div>
 
+      <div className="max-w-3xl w-full">
         <div className="mb-6 flex justify-center">
           <Image
             src="/images/logo.png"
             alt="Make Time For More Logo"
-            width={120}
-            height={120}
+            width={130}
+            height={130}
             className="rounded-full shadow-lg"
           />
         </div>
 
-        <h1 className="text-3xl font-bold tracking-tight mb-6 text-[#E26C73] text-center">
-          About the Work-Life Balance Audit
-        </h1>
+        <h1 className="text-3xl brand-title mb-8 text-center text-[#E26C73]">About the Work-Life Balance Audit</h1>
 
         <div className="space-y-6 text-gray-700">
           <div className="bg-white p-6 rounded-lg shadow-md border border-[#E26C73] mb-8">
-            <div className="flex items-center justify-center gap-2 mb-4 text-[#E26C73]">
-              <Gift className="h-5 w-5" />
+            <div className="flex items-center justify-center gap-2 mb-4 text-[#5D9D61]">
+              <span className="text-2xl">🌸</span>
               <h2 className="text-xl font-bold">Your Priceless Gift That Keeps on GIV*EN</h2>
-              <Gift className="h-5 w-5" />
+              <span className="text-2xl">🌸</span>
             </div>
             <p className="text-center mb-2">
-              <span className="font-bold">Regular Value: $997</span> — Yours FREE Today
+              <span className="font-bold">Regular Value: $997</span> — Yours FREE During the BETA Season
             </p>
             <p className="text-center italic mb-4">
               "This isn't just another one-time assessment—it's your ongoing companion for work-life balance mastery."
@@ -88,7 +130,7 @@ export default function AboutPage() {
             </ul>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-6 items-center my-8 bg-white p-6 rounded-lg shadow-md">
+          <div className="flex flex-col md:flex-row gap-6 items-center my-8 bg-[#5D9D61] p-6 rounded-lg shadow-md">
             <div className="w-full md:w-1/3 flex justify-center">
               <Image
                 src="/images/barbara-portrait.jpg"
@@ -99,14 +141,15 @@ export default function AboutPage() {
               />
             </div>
             <div className="w-full md:w-2/3">
-              <h2 className="text-xl font-semibold text-[#E26C73] mb-3">Meet Barbara</h2>
+              <h2 className="text-xl font-semibold text-white mb-3">Meet Thought Leader Barbara</h2>
               <p className="italic mb-4">
-                "I created this audit as the <span className="font-bold">Mandatory 1st Step to Achieving Your Desired Work-Lifestyle</span>. 
-                As a Thought Leader who has guided countless women founders to holistic success, I know that clarity
-                precedes transformation. This isn't just an assessment—it's a priceless gift that keeps on GIV*EN,
-                allowing you to check in on your work-life balance whenever you need guidance."
+                "I created this audit as the{" "}
+                <span className="font-bold">Mandatory 1st Step to Achieving Your Desired Work-Lifestyle</span>. As a
+                Thought Leader who has guided countless women founders to holistic success, I know that clarity precedes
+                transformation. This isn't just an assessment—it's a priceless gift that keeps on GIV*EN, allowing you
+                to check in on your work-life balance whenever you need guidance."
               </p>
-              <p className="font-semibold">- Barbara, Founder of Make Time For More™</p>
+              <p className="font-semibold text-white">- Barbara Bamba, Founder of Make Time For More™</p>
             </div>
           </div>
 
@@ -139,9 +182,9 @@ export default function AboutPage() {
               <li>Gives you a taste of the transformative experience that awaits</li>
             </ul>
             <div className="flex items-center justify-center gap-2 text-[#E26C73]">
-              <Sparkles className="h-5 w-5" />
-              <p className="font-bold">A $997 value, yours completely FREE</p>
-              <Sparkles className="h-5 w-5" />
+              <span className="text-2xl">🌸</span>
+              <p className="font-bold">A $997 Value, Yours Completely FREE During The BETA Season</p>
+              <span className="text-2xl">🌸</span>
             </div>
           </div>
 
@@ -155,22 +198,57 @@ export default function AboutPage() {
             The Make Time For More™ approach recognizes that true balance isn't about equal time in all areas, but
             rather intentional focus on what matters most to you in each season of life and business.
           </p>
+        </div>
+      </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md mt-8 border border-[#E26C73]">
-            <h2 className="text-xl font-semibold text-[#E26C73] mb-4 text-center">Take Your First Step Today</h2>
-            <p className="mb-4 text-center">
-              Complete the free Work-Life Balance Audit—the Mandatory 1st Step to Achieving Your Desired Work-Lifestyle.
-            </p>
-            <div className="flex justify-center">
-              <Link href="/">
-                <Button className="bg-[#5D9D61] hover:bg-[#4c8050] text-white font-bold text-xl px-8 py-6 rounded-md shadow-md">
-                  Take The FREE Audit Now!
-                </Button>
-              </Link>
-            </div>
+      {/* Bottom Navigation */}
+      <div className="w-full max-w-3xl mb-6 mt-12">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => router.push("/")} className="">
+              Retake Audit
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/my-results")} className="">
+              Back to Results
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/about")} className="bg-brand-tan">
+              About
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/learn-more")} className="">
+              Learn More
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/join-us")} className="">
+              Join Us
+            </Button>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              onClick={() =>
+                window.open(
+                  "https://docs.google.com/forms/d/e/1FAIpQLSeYa2yNmiIOXykp3Kd5Xts0jDPe96NJ4adWhFYEwi5GXZ3Ilw/viewform?usp=header",
+                  "_blank",
+                )
+              }
+              className="bg-brand-green text-white hover:bg-green-600"
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              APPLY NOW!
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => window.open("https://www.maketimeformore.com", "_blank")}
+              className=""
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              Visit Website
+            </Button>
           </div>
         </div>
       </div>
+
+      <footer className="bg-brand-tan py-6 text-center text-black w-full">
+        <p>© 2025 Make Time For More™. All rights reserved.</p>
+      </footer>
     </main>
   )
 }

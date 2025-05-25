@@ -38,8 +38,8 @@ export default function AuditWelcomePopup({ onClose, onStartAudit }: AuditWelcom
               <Image
                 src="/images/logo.png"
                 alt="Make Time For More Logo"
-                width={180}
-                height={180}
+                width={225}
+                height={225}
                 className="rounded-full"
               />
             </div>

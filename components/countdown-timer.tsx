@@ -43,17 +43,17 @@ const CountdownTimer = ({ className = "" }: CountdownTimerProps) => {
       if (sundayNumber === 1) {
         setWeekLabel("The 1st Week")
         setTargetWeekMessage(
-          "The 7-Day Work-Life Balance Reset Experience where You Reset Your Rhythms and Reclaim Your Time In One Powerful Week This Month!"
+          "The 7-Day Work-Life Balance Reset Experience where You Reset Your Rhythms and Reclaim Your Time In One Powerful Week This Month!",
         )
       } else if (sundayNumber === 2) {
         setWeekLabel("The 2nd Week")
         setTargetWeekMessage(
-          "Our 14-Day Momentum Building Week -- Perfect if you're ready to start building real momentum toward your desired work-lifestyle!"
+          "Our 14-Day Momentum Building Week -- Perfect if you're ready to start building real momentum toward your desired work-lifestyle!",
         )
       } else if (sundayNumber === 3) {
         setWeekLabel("The 3rd Week")
         setTargetWeekMessage(
-          "Our 21-Day Habit Building week followed by our 1-Week Recovery Break -- Perfect if you are truly ready to disrupt hustle culture, and reset your work-life balance habits for sustainable success."
+          "Our 21-Day Habit Building week followed by our 1-Week Recovery Break -- Perfect if you are truly ready to disrupt hustle culture, and reset your work-life balance habits for sustainable success.",
         )
       }
 
@@ -165,28 +165,34 @@ const CountdownTimer = ({ className = "" }: CountdownTimerProps) => {
 
   return (
     <div className="space-y-3 w-full">
-      <p className="text-center font-bold text-xl break-words">
+      <p
+        className={`text-center font-bold text-xl break-words ${className?.includes("text-white") ? "text-white" : ""}`}
+      >
         Counting Down to {weekLabel} of Work-Life Balance in {currentMonth}
       </p>
       <div className={`flex justify-center space-x-6 ${className}`}>
         <div className="text-center">
-          <div className="text-4xl font-bold">{String(timeLeft.days).padStart(2, '0')}</div>
+          <div className="text-4xl font-bold">{String(timeLeft.days).padStart(2, "0")}</div>
           <div className="text-sm uppercase font-medium">Days</div>
         </div>
         <div className="text-center">
-          <div className="text-4xl font-bold">{String(timeLeft.hours).padStart(2, '0')}</div>
+          <div className="text-4xl font-bold">{String(timeLeft.hours).padStart(2, "0")}</div>
           <div className="text-sm uppercase font-medium">Hours</div>
         </div>
         <div className="text-center">
-          <div className="text-4xl font-bold">{String(timeLeft.minutes).padStart(2, '0')}</div>
+          <div className="text-4xl font-bold">{String(timeLeft.minutes).padStart(2, "0")}</div>
           <div className="text-sm uppercase font-medium">Mins</div>
         </div>
         <div className="text-center">
-          <div className="text-4xl font-bold">{String(timeLeft.seconds).padStart(2, '0')}</div>
+          <div className="text-4xl font-bold">{String(timeLeft.seconds).padStart(2, "0")}</div>
           <div className="text-sm uppercase font-medium">Secs</div>
         </div>
       </div>
-      <p className="text-md text-center mt-2 max-w-2xl mx-auto px-4 break-words">{targetWeekMessage}</p>
+      <p
+        className={`text-md text-center mt-2 max-w-2xl mx-auto px-4 break-words ${className?.includes("text-white") ? "text-white" : ""}`}
+      >
+        {targetWeekMessage}
+      </p>
     </div>
   )
 }

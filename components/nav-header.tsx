@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
 import { hasCompletedAudit } from "@/utils/audit-storage"
-import { Menu, RefreshCw, FileText, X, ExternalLink, Home } from "lucide-react"
+import { Menu, RefreshCw, X, ExternalLink, Home } from "lucide-react"
 
 export default function NavHeader() {
   const router = useRouter()
@@ -70,23 +70,45 @@ export default function NavHeader() {
 
           <Button variant="ghost" onClick={handleRetakeAudit} className="text-black hover:bg-brand-tan">
             <RefreshCw className="h-4 w-4 mr-2" />
-            Retake The Audit
+            Retake Audit
           </Button>
-
-          {hasResults && (
-            <Button
-              variant="ghost"
-              onClick={() => navigateTo("/my-results")}
-              className={`text-black hover:bg-brand-tan ${pathname === "/my-results" ? "bg-brand-tan" : ""}`}
-            >
-              <FileText className="h-4 w-4 mr-2" />
-              View Your Results
-            </Button>
-          )}
 
           <Button variant="ghost" onClick={openApplyNow} className="bg-brand-green text-white hover:bg-green-600">
             <ExternalLink className="h-4 w-4 mr-2" />
             APPLY NOW!
+          </Button>
+
+          <Button
+            variant="ghost"
+            onClick={() => navigateTo("/about")}
+            className={`text-black hover:bg-brand-tan ${pathname === "/about" ? "bg-brand-tan" : ""}`}
+          >
+            About
+          </Button>
+
+          <Button
+            variant="ghost"
+            onClick={() => navigateTo("/learn-more")}
+            className={`text-black hover:bg-brand-tan ${pathname === "/learn-more" ? "bg-brand-tan" : ""}`}
+          >
+            Learn More
+          </Button>
+
+          <Button
+            variant="ghost"
+            onClick={() => navigateTo("/join-us")}
+            className={`text-black hover:bg-brand-tan ${pathname === "/join-us" ? "bg-brand-tan" : ""}`}
+          >
+            Join Us
+          </Button>
+
+          <Button
+            variant="ghost"
+            onClick={() => window.open("https://www.maketimeformore.com", "_blank")}
+            className="text-black hover:bg-brand-tan"
+          >
+            <ExternalLink className="h-4 w-4 mr-2" />
+            Visit Website
           </Button>
         </nav>
 
@@ -115,19 +137,8 @@ export default function NavHeader() {
               className="justify-start text-black hover:bg-brand-tan mb-2"
             >
               <RefreshCw className="h-4 w-4 mr-2" />
-              Retake The Audit
+              Retake Audit
             </Button>
-
-            {hasResults && (
-              <Button
-                variant="ghost"
-                onClick={() => navigateTo("/my-results")}
-                className={`justify-start text-black hover:bg-brand-tan ${pathname === "/my-results" ? "bg-brand-tan" : ""} mb-2`}
-              >
-                <FileText className="h-4 w-4 mr-2" />
-                View Your Results
-              </Button>
-            )}
 
             <Button
               variant="ghost"
@@ -136,6 +147,39 @@ export default function NavHeader() {
             >
               <ExternalLink className="h-4 w-4 mr-2" />
               APPLY NOW!
+            </Button>
+
+            <Button
+              variant="ghost"
+              onClick={() => navigateTo("/about")}
+              className={`justify-start text-black hover:bg-brand-tan ${pathname === "/about" ? "bg-brand-tan" : ""} mb-2`}
+            >
+              About
+            </Button>
+
+            <Button
+              variant="ghost"
+              onClick={() => navigateTo("/learn-more")}
+              className={`justify-start text-black hover:bg-brand-tan ${pathname === "/learn-more" ? "bg-brand-tan" : ""} mb-2`}
+            >
+              Learn More
+            </Button>
+
+            <Button
+              variant="ghost"
+              onClick={() => navigateTo("/join-us")}
+              className={`justify-start text-black hover:bg-brand-tan ${pathname === "/join-us" ? "bg-brand-tan" : ""} mb-2`}
+            >
+              Join Us
+            </Button>
+
+            <Button
+              variant="ghost"
+              onClick={() => window.open("https://www.maketimeformore.com", "_blank")}
+              className="justify-start text-black hover:bg-brand-tan mb-2"
+            >
+              <ExternalLink className="h-4 w-4 mr-2" />
+              Visit Website
             </Button>
           </nav>
         </div>

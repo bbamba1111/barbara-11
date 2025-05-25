@@ -489,8 +489,8 @@ export default function WorkLifeBalanceAudit({ onClose, onComplete }: WorkLifeBa
   const currentQuestion = questions[currentStep]
 
   return (
-    <div className="fixed inset-0 z-50 overflow-auto bg-black/50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-[550px] w-full min-h-[85vh] max-h-[90vh] overflow-y-auto relative">
+    <div className="fixed inset-0 z-50 overflow-auto bg-black/50 flex items-center justify-center p-2">
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-[600px] w-full h-[98vh] overflow-y-auto relative">
         {/* Close button */}
         <button
           onClick={onClose}
@@ -503,23 +503,23 @@ export default function WorkLifeBalanceAudit({ onClose, onComplete }: WorkLifeBa
         {/* Add confetti effect for good scores on results page */}
         {showConfetti && <CherryBlossomConfetti duration={8} speed="fast" />}
 
-        <div className="p-6">
+        <div className="p-6 flex flex-col h-full">
           {!isResultsPage && (
-            <div className="mb-6">
-              {/* 1 inch whitespace + 25% more = 120px */}
-              <div className="h-40"></div>
+            <div className="mb-4 flex-shrink-0">
+              {/* Minimal top spacing */}
+              <div className="h-2"></div>
 
               <div className="flex justify-center mb-4">
                 <Image
                   src="/images/logo.png"
                   alt="Make Time For More Logo"
-                  width={75}
-                  height={75}
+                  width={118}
+                  height={118}
                   className="rounded-full"
                 />
               </div>
-              <h2 className="text-xl brand-title text-center text-brand-pink mb-1">Make Time For More™</h2>
-              <h3 className="text-lg brand-subtitle text-center text-black mb-6">Work-Life Balance Audit</h3>
+              <h2 className="text-2xl brand-title text-center text-brand-pink mb-1">Make Time For More™</h2>
+              <h3 className="text-xl brand-subtitle text-center text-black mb-4">Work-Life Balance Audit</h3>
               <p className="text-gray-600 text-center text-sm">
                 Based on the 13 Core Life Value Areas from the Make Time For More™ Work-Life Balance Experience
               </p>
@@ -535,8 +535,8 @@ export default function WorkLifeBalanceAudit({ onClose, onComplete }: WorkLifeBa
                 <Image
                   src="/images/logo.png"
                   alt="Make Time For More Logo"
-                  width={75}
-                  height={75}
+                  width={94}
+                  height={94}
                   className="rounded-full"
                 />
               </div>
@@ -547,7 +547,7 @@ export default function WorkLifeBalanceAudit({ onClose, onComplete }: WorkLifeBa
           )}
 
           {!isResultsPage && (
-            <div className="mb-4">
+            <div className="mb-3 flex-shrink-0">
               <div className="flex justify-between text-sm mb-2">
                 <span>
                   Question {currentStep + 1} of {totalSteps}
@@ -559,55 +559,55 @@ export default function WorkLifeBalanceAudit({ onClose, onComplete }: WorkLifeBa
           )}
 
           {!isResultsPage && (
-            <div className="py-4">
-              <div className="mb-4">
-                <p className="text-sm text-gray-500 mb-3">
-                  On a scale from 1 to 5, where 1 = Never and 5 = Consistently:
-                </p>
+            <div className="flex-1 flex flex-col">
+              <div className="flex-1">
+                <div className="mb-3">
+                  <p className="text-sm text-gray-500 mb-2">
+                    On a scale from 1 to 5, where 1 = Never and 5 = Consistently:
+                  </p>
+                </div>
+                <h3 className="text-lg header-bold mb-2">
+                  <span className="inline-block bg-brand-pink text-white rounded-full w-7 h-7 text-center leading-7 mr-2 text-sm">
+                    {currentQuestion.number}
+                  </span>
+                  {currentQuestion.title}
+                </h3>
+                <p className="mb-4 text-black leading-relaxed">{currentQuestion.text}</p>
+                <RadioGroup
+                  value={answers[currentQuestion.id]?.toString() || ""}
+                  onValueChange={handleAnswer}
+                  className="space-y-2"
+                >
+                  {answerLabels.map((label, index) => (
+                    <div key={index} className="flex items-center space-x-3 border p-2 rounded-md hover:bg-gray-50">
+                      <RadioGroupItem value={(index + 1).toString()} id={`answer-${index}`} />
+                      <Label htmlFor={`answer-${index}`} className="flex-1 cursor-pointer text-sm">
+                        {label}
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
               </div>
-              <h3 className="text-lg header-bold mb-3">
-                <span className="inline-block bg-brand-pink text-white rounded-full w-7 h-7 text-center leading-7 mr-2 text-sm">
-                  {currentQuestion.number}
-                </span>
-                {currentQuestion.title}
-              </h3>
-              <p className="mb-6 text-black leading-relaxed">{currentQuestion.text}</p>
-              <RadioGroup
-                value={answers[currentQuestion.id]?.toString() || ""}
-                onValueChange={handleAnswer}
-                className="space-y-3"
-              >
-                {answerLabels.map((label, index) => (
-                  <div key={index} className="flex items-center space-x-3 border p-3 rounded-md hover:bg-gray-50">
-                    <RadioGroupItem value={(index + 1).toString()} id={`answer-${index}`} />
-                    <Label htmlFor={`answer-${index}`} className="flex-1 cursor-pointer text-sm">
-                      {label}
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-          )}
 
-          {!isResultsPage && (
-            <div className="flex justify-between mt-6">
-              {currentStep > 0 ? (
-                <Button variant="outline" onClick={handlePrevious} className="px-4 py-2">
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Previous
+              <div className="flex justify-between pt-4 border-t mt-4 flex-shrink-0">
+                {currentStep > 0 ? (
+                  <Button variant="outline" onClick={handlePrevious} className="px-4 py-2">
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    Previous
+                  </Button>
+                ) : (
+                  <div></div>
+                )}
+
+                <Button
+                  onClick={handleNext}
+                  disabled={!answers[currentQuestion?.id]}
+                  className="bg-brand-pink hover:bg-brand-green active:bg-green-700 text-white px-4 py-2 transition-colors"
+                >
+                  {isLastQuestion ? "See Results" : "Next"}
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-              ) : (
-                <div></div>
-              )}
-
-              <Button
-                onClick={handleNext}
-                disabled={!answers[currentQuestion?.id]}
-                className="bg-brand-pink hover:bg-pink-600 text-white px-4 py-2"
-              >
-                {isLastQuestion ? "See Results" : "Next"}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+              </div>
             </div>
           )}
         </div>
