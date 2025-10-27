@@ -3,9 +3,9 @@ import type { Metadata } from "next"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "v0 App",
-  description: "Created with v0",
-  generator: "v0.dev",
+  title: "Success Hub - Make Time For More",
+  description: "Your work-life balance success hub",
+    generator: 'v0.app'
 }
 
 export default function RootLayout({
@@ -15,14 +15,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body>{children}</body>
     </html>
   )
